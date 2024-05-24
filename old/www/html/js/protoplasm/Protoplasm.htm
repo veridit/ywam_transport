@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0057)http://jongsma.org/software/protoplasm/control/timepicker -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title>Protoplasm</title>
+		<link rel="stylesheet" href="http://jongsma.org/css/protoplasm.css">
+		<script type="text/javascript" async="" src="./Protoplasm_files/ga.js"></script><script type="text/javascript" language="javascript" src="./Protoplasm_files/prototype.js"></script>
+		<script type="text/javascript" language="javascript" src="./Protoplasm_files/scriptaculous.js"></script><script type="text/javascript" src="./Protoplasm_files/builder.js"></script><script type="text/javascript" src="./Protoplasm_files/effects.js"></script><script type="text/javascript" src="./Protoplasm_files/dragdrop.js"></script><script type="text/javascript" src="./Protoplasm_files/controls.js"></script><script type="text/javascript" src="./Protoplasm_files/slider.js"></script><script type="text/javascript" src="./Protoplasm_files/sound.js"></script>
+		<script type="text/javascript" language="javascript" src="./Protoplasm_files/protoplasm.js"></script>
+		<script type="text/javascript" language="javascript" src="./Protoplasm_files/common.js"></script><link rel="stylesheet" type="text/css" href="./Protoplasm_files/protoplasm.css"><script type="text/javascript" src="./Protoplasm_files/ratingbar.js"></script><link rel="stylesheet" type="text/css" href="./Protoplasm_files/rating.css">
+		<script type="text/javascript" language="javascript">
+			Protoplasm.use('timepicker')
+	.transform('input.timepicker')
+	.transform('input.timepicker2', {use24hrs: true});
+
+
+		</script><script type="text/javascript" src="./Protoplasm_files/timepicker.js"></script><link rel="stylesheet" type="text/css" href="./Protoplasm_files/timepicker.css">
+	</head>
+	<body>
+		<!--
+		<div id="update">
+			<img src="/images/warning.png" />
+			We are in the process of refactoring existing controls and integrating
+			them into the Protoplasm framework. Releases should be treated as beta
+			quality.
+		</div>
+		-->
+		<div id="background">
+			<div id="header">
+				<div>
+					<div class="navigation">
+						<ul>
+							<li><a href="http://jongsma.org/software/protoplasm/">Features</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/download">Download</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/demos">Demos &amp; Documentation</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/developer">Developers</a></li>
+						</ul>
+					</div>
+					<div class="branding">
+						<a href="http://jongsma.org/software/protoplasm/">
+							<img class="logo" src="./Protoplasm_files/protoplasm-small.png">
+							<h1>Protoplasm</h1>
+							<span class="tagline">Prototype UI Controls</span>
+						</a>
+					</div>
+				</div>
+			</div>
+						<div class="pagecenter">
+								<div id="sidebar">
+					<h2>Controls</h2>
+					<ul>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/colorpicker">Color Picker</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/datepicker">Date Picker</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/dialog">Dialog</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/filechooser">File Chooser</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/upload">File Uploader</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/tabstrip">Tab Strip</a></li>
+						<li class="sub active"><a href="./Protoplasm_files/Protoplasm.htm">Time Picker</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/treelist">Tree List</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/rte">Rich Text Editor</a></li>
+						<li class="sub"><a href="http://jongsma.org/software/protoplasm/control/livegrid">Live Grid</a></li>
+					</ul>
+				</div>
+								<div id="content" class="indent">
+					<div style="float:right;"><div class="rating_bar" id="rating_timepicker" style="height: 20px; "><div class="rating_star rating_on"></div><div class="rating_star rating_on"></div><div class="rating_star rating_on"></div><div class="rating_star rating_half"></div><div class="rating_star"></div></div><div class="rating_label">Rating: <strong id="rating_timepicker_average"> 3.5</strong>/5 (<span id="rating_timepicker_votes">6 votes</span>)</div></div>
+<h2>Time Picker</h2>
+
+<p>A time picker control. To open the calendar, click on the input box.</p>
+<p>This control is also used as part of the <a href="http://jongsma.org/software/protoplasm/control/datepicker">date/time picker</a>.</p>
+
+<h3>Demo</h3>
+
+<form onsubmit="return false;">
+	<div style="float:left; width:250px;">Time (AM/PM):</div>
+	<span style="position:relative;"><input class="timepicker" style="background-image: url(http://jongsma.org/js/controls/timepicker/clock.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255); padding-right: 20px; background-position: 100% 50%; background-repeat: no-repeat no-repeat; "></span>
+	<br>
+	<div style="float:left; width:250px;">Time (24 hr):</div>
+	<span style="position:relative;"><input class="timepicker2" style="background-image: url(http://jongsma.org/js/controls/timepicker/clock.png); background-attachment: initial; background-origin: initial; background-clip: initial; background-color: rgb(255, 255, 255); padding-right: 20px; background-position: 100% 50%; background-repeat: no-repeat no-repeat; "></span>
+	<br>
+</form>
+
+<h3>Source Example</h3>
+
+
+<p><code>&lt;html&gt;
+    &lt;head&gt;
+        &lt;script language="javascript" src="protoplasm.js"&gt;&lt;/script&gt;
+        &lt;script language="javascript"&gt;
+            <a href="http://jongsma.org/software/protoplasm/api/Protoplasm/">Protoplasm</a>.<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/use/">use</a>('timepicker').<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/Transformer/prototype/transform/">transform</a>('input.timepicker');
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;input type="text" name="time" class="timepicker" /&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></p>
+
+
+<h3>Usage</h3>
+
+<p>To create time pickers out of all elements that match a given CSS rule:</p>
+
+<p><code><a href="http://jongsma.org/software/protoplasm/api/Protoplasm/">Protoplasm</a>.<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/use/">use</a>('timepicker').<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/Transformer/prototype/transform/">transform</a>(<i>selector[, options]</i>);</code></p>
+
+<p>Parameters:</p>
+
+<table class="parameters">
+	<tbody>
+		<tr>
+			<th width="100">Parameter</th>
+			<th width="50">Required</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>selector</td>
+			<td>yes</td>
+			<td>A CSS rule matching the text inputs to turn into time pickers</td>
+		</tr>
+		<tr>
+			<td>options</td>
+			<td>no</td>
+			<td>
+				An object (hash) containing name/value pairs of additional options.
+				<br><br>
+				<hr>
+				Available options:
+				<hr>
+				<table>
+					<tbody><tr>
+						<td width="75"><i>icon</i></td>
+						<td>The icon to display in the right side of the input box</td>
+					</tr>
+					<tr>
+						<td><i>format</i></td>
+						<td>The time format for the input box.  Defaults to 'HH:mm:ss'</td>
+					</tr>
+					<tr>
+						<td><i>use24hrs</i></td>
+						<td>A boolean value determining whether to display the time in
+							AM/PM or 24 hour notation.  Defaults to false.</td>
+					</tr>
+					<tr>
+						<td><i>onChange</i></td>
+						<td>A function to call when the active time changes.
+							A date object is passed as a parameter.</td>
+					</tr>
+					<tr>
+						<td><i>onSelect</i></td>
+						<td>A function to call when the user selects a time. A date
+							object is passed as a parameter.</td>
+					</tr>
+				</tbody></table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Manual Creation</h3>
+
+<p>If you want more control over creation and destruction of the time
+picker, you can instantiate it manually instead of using
+<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/">Protoplasm</a>.<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/transform/">transform</a>.</p>
+
+<p>In your &lt;head&gt; section:</p>
+
+<p><code><a href="http://jongsma.org/software/protoplasm/api/Protoplasm/">Protoplasm</a>.<a href="http://jongsma.org/software/protoplasm/api/Protoplasm/use/">use</a>('timepicker');</code></p>
+
+<p>To create a time picker:</p>
+
+<p><code>var picker = new <a href="http://jongsma.org/software/protoplasm/api/controls/Control/TimePicker/new/">Control.TimePicker</a>(<i>element[, options]</i>);</code></p>
+
+<p>To destroy the time picker:</p>
+
+<p><code>picker.<a href="http://jongsma.org/software/protoplasm/api/controls/Control/TimePicker/prototype/destroy/">destroy</a>();</code></p>
+
+<p>For more details, see the <a href="http://jongsma.org/software/protoplasm/api/controls/Control/TimePicker/">API documentation for Control.TimePicker</a>.</p><p>				</p></div>
+			</div>
+			<div id="footer">
+				<div>
+					<div class="navigation">
+						<ul>
+							<li><a href="http://jongsma.org/software/protoplasm/">Features</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/download">Download</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/demos">Demos &amp; Documentation</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/developer">Developers</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/license">License</a></li>
+							<li><a href="http://jongsma.org/software/protoplasm/contact">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-442486-1']);
+			_gaq.push(['_setDomainName', '.jongsma.org']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+			
+		</script>
+	
+</body></html>

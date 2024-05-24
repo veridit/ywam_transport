@@ -1,0 +1,16 @@
+<html>
+    <head>
+		<link rel="stylesheet" type="text/css" media="screen" href="protoplasm.css">
+        <script language="javascript" src="protoplasm.js"></script>
+		<script type="text/javascript" language="javascript" src="common.js"></script>
+        <script language="javascript">
+            // transform() calls can be chained together
+            Protoplasm.use('datepicker')
+                .transform('input.datepicker')
+               .transform('.datetimepicker', { timePicker: true })
+        </script>
+    </head>
+    <body>
+        <input type="text" name="date" class="datetimepicker" />
+    </body>
+</html>
