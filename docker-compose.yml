@@ -2,10 +2,25 @@
 version: '3.8'
 
 services:
+  db-old:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3406:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./old/20240513.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
+
   db:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5442:5432"
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -31,3 +46,4 @@ services:
 
 volumes:
   postgres_data:
+  mysql_data:
