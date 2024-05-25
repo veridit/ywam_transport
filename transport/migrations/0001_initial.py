@@ -2,11 +2,18 @@
 
 from django.db import migrations
 
+def load_sql_from_file(apps, schema_editor):
+    with open('rename_columns.sql', 'r') as file:
+        sql = file.read()
+    schema_editor.execute(sql)
 
 class Migration(migrations.Migration):
+
+    initial = True
 
     dependencies = [
     ]
 
     operations = [
+        migrations.RunPython(load_sql_from_file),
     ]
