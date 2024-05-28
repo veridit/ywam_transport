@@ -9,30 +9,5 @@ SET work_mem to '16MB', maintenance_work_mem to '512MB'
 CAST type datetime to timestamptz drop default drop not null using zero-dates-to-null,
      type date drop not null using zero-dates-to-null
 
-ALTER TABLE NAMES MATCHING 'tbl_3_vehicle_limit' RENAME TO 'vehicle_limit'
-ALTER TABLE NAMES MATCHING 'tbl_abandon_trips' RENAME TO 'abandon_trips'
-ALTER TABLE NAMES MATCHING 'tbl_comment_log' RENAME TO 'comment_log'
-ALTER TABLE NAMES MATCHING 'tbl_departments' RENAME TO 'departments'
-ALTER TABLE NAMES MATCHING 'tbl_driver_links_order' RENAME TO 'driver_links_order'
-ALTER TABLE NAMES MATCHING 'tbl_global_settings' RENAME TO 'global_settings'
-ALTER TABLE NAMES MATCHING 'tbl_info_links' RENAME TO 'info_links'
-ALTER TABLE NAMES MATCHING 'tbl_log' RENAME TO 'log'
-ALTER TABLE NAMES MATCHING 'tbl_reservations' RENAME TO 'reservations'
-ALTER TABLE NAMES MATCHING 'tbl_restricted_charges' RENAME TO 'restricted_charges'
-ALTER TABLE NAMES MATCHING 'tbl_shop_tasks' RENAME TO 'shop_tasks'
-ALTER TABLE NAMES MATCHING 'tbl_special_notice' RENAME TO 'special_notice'
-ALTER TABLE NAMES MATCHING 'tbl_srvc_resvs' RENAME TO 'service_reservations'
-ALTER TABLE NAMES MATCHING 'tbl_srvc_resvs_details' RENAME TO 'service_reservations_details'
-ALTER TABLE NAMES MATCHING 'tbl_temp_mass_emails' RENAME TO 'temp_mass_emails'
-ALTER TABLE NAMES MATCHING 'tbl_trip_details' RENAME TO 'trip_details'
-ALTER TABLE NAMES MATCHING 'tbl_user' RENAME TO 'user'
-ALTER TABLE NAMES MATCHING 'tbl_user_comments' RENAME TO 'user_comments'
-ALTER TABLE NAMES MATCHING 'tbl_user_group' RENAME TO 'user_group'
-ALTER TABLE NAMES MATCHING 'tbl_vehicle_brand' RENAME TO 'vehicle_brand'
-ALTER TABLE NAMES MATCHING 'tbl_vehicle_comments' RENAME TO 'vehicle_comments'
-ALTER TABLE NAMES MATCHING 'tbl_vehicle_type' RENAME TO 'vehicle_type'
-ALTER TABLE NAMES MATCHING 'tbl_vehicles' RENAME TO 'vehicles'
-ALTER TABLE NAMES MATCHING 'tbl_work_type' RENAME TO 'work_type'
-
 BEFORE LOAD DO
 $$ create schema if not exists public; $$;

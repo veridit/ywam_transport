@@ -1,6 +1,32 @@
 -- rename_columns.sql
 BEGIN;
 
+-- Clean up table names
+ALTER TABLE tbl_3_vehicle_limit RENAME TO vehicle_limit;
+ALTER TABLE tbl_abandon_trips RENAME TO abandon_trips;
+ALTER TABLE tbl_comment_log RENAME TO comment_log;
+ALTER TABLE tbl_departments RENAME TO departments;
+ALTER TABLE tbl_driver_links_order RENAME TO driver_links_position;
+ALTER TABLE tbl_global_settings RENAME TO global_settings;
+ALTER TABLE tbl_info_links RENAME TO info_links;
+ALTER TABLE tbl_log RENAME TO log;
+ALTER TABLE tbl_reservations RENAME TO reservations;
+ALTER TABLE tbl_restricted_charges RENAME TO restricted_charges;
+ALTER TABLE tbl_shop_tasks RENAME TO shop_tasks;
+ALTER TABLE tbl_special_notice RENAME TO special_notice;
+ALTER TABLE tbl_srvc_resvs RENAME TO service_reservations;
+ALTER TABLE tbl_srvc_resvs_details RENAME TO service_reservations_details;
+ALTER TABLE tbl_temp_mass_emails RENAME TO temp_mass_emails;
+ALTER TABLE tbl_trip_details RENAME TO trip_details;
+ALTER TABLE tbl_user RENAME TO user_profile;
+ALTER TABLE tbl_user_comments RENAME TO user_comments;
+ALTER TABLE tbl_user_group RENAME TO user_group;
+ALTER TABLE tbl_vehicle_brand RENAME TO vehicle_brand;
+ALTER TABLE tbl_vehicle_comments RENAME TO vehicle_comments;
+ALTER TABLE tbl_vehicle_type RENAME TO vehicle_type;
+ALTER TABLE tbl_vehicles RENAME TO vehicles;
+ALTER TABLE tbl_work_type RENAME TO work_type;
+
 -- Clean up column names for vehicle_limit
 ALTER TABLE vehicle_limit RENAME COLUMN limit_id TO id;
 ALTER TABLE vehicle_limit RENAME COLUMN soption TO option;
@@ -154,36 +180,36 @@ ALTER TABLE trip_details RENAME COLUMN desc_problem TO problem_description;
 ALTER TABLE trip_details RENAME COLUMN user_id TO user_profile_id;
 
 -- Clean up column names for user
-ALTER TABLE "user" RENAME COLUMN user_id TO id;
-ALTER TABLE "user" RENAME COLUMN f_name TO first_name;
-ALTER TABLE "user" RENAME COLUMN l_name TO last_name;
-ALTER TABLE "user" RENAME COLUMN dept_id TO department_id;
---ALTER TABLE "user" RENAME COLUMN phone TO phone;
---ALTER TABLE "user" RENAME COLUMN birth_date TO birth_date;
---ALTER TABLE "user" RENAME COLUMN license_no TO license_no;
---ALTER TABLE "user" RENAME COLUMN license_state TO license_state;
---ALTER TABLE "user" RENAME COLUMN license_expire TO license_expire;
---ALTER TABLE "user" RENAME COLUMN email TO email;
---ALTER TABLE "user" RENAME COLUMN password TO password;
---ALTER TABLE "user" RENAME COLUMN drive_tested TO drive_tested;
---ALTER TABLE "user" RENAME COLUMN test_date TO test_date;
---ALTER TABLE "user" RENAME COLUMN end_permit TO end_permit;
-ALTER TABLE "user" RENAME COLUMN home_st_country TO home_state_country;
---ALTER TABLE "user" RENAME COLUMN active TO active;
---ALTER TABLE "user" RENAME COLUMN status_date TO status_date;
---ALTER TABLE "user" RENAME COLUMN user_group TO user_group;
---ALTER TABLE "user" RENAME COLUMN user_type TO user_type;
---ALTER TABLE "user" RENAME COLUMN photo TO photo;
---ALTER TABLE "user" RENAME COLUMN photo_link TO photo_link;
---ALTER TABLE "user" RENAME COLUMN comment TO comment;
---ALTER TABLE "user" RENAME COLUMN reg_date TO reg_date;
---ALTER TABLE "user" RENAME COLUMN permit_type TO permit_type;
---ALTER TABLE "user" RENAME COLUMN renew_date TO renew_date;
---ALTER TABLE "user" RENAME COLUMN renew_text TO renew_text;
---ALTER TABLE "user" RENAME COLUMN new_user TO new_user;
---ALTER TABLE "user" RENAME COLUMN driver_permission TO driver_permission;
---ALTER TABLE "user" RENAME COLUMN license_country TO license_country;
---ALTER TABLE "user" RENAME COLUMN max_passengers TO max_passengers;
+ALTER TABLE user_profile RENAME COLUMN user_id TO id;
+ALTER TABLE user_profile RENAME COLUMN f_name TO first_name;
+ALTER TABLE user_profile RENAME COLUMN l_name TO last_name;
+ALTER TABLE user_profile RENAME COLUMN dept_id TO department_id;
+--ALTER TABLE user_profile RENAME COLUMN phone TO phone;
+--ALTER TABLE user_profile RENAME COLUMN birth_date TO birth_date;
+--ALTER TABLE user_profile RENAME COLUMN license_no TO license_no;
+--ALTER TABLE user_profile RENAME COLUMN license_state TO license_state;
+--ALTER TABLE user_profile RENAME COLUMN license_expire TO license_expire;
+--ALTER TABLE user_profile RENAME COLUMN email TO email;
+--ALTER TABLE user_profile RENAME COLUMN password TO password;
+--ALTER TABLE user_profile RENAME COLUMN drive_tested TO drive_tested;
+--ALTER TABLE user_profile RENAME COLUMN test_date TO test_date;
+--ALTER TABLE user_profile RENAME COLUMN end_permit TO end_permit;
+ALTER TABLE user_profile RENAME COLUMN home_st_country TO home_state_country;
+--ALTER TABLE user_profile RENAME COLUMN active TO active;
+--ALTER TABLE user_profile RENAME COLUMN status_date TO status_date;
+--ALTER TABLE user_profile RENAME COLUMN user_group TO user_group;
+--ALTER TABLE user_profile RENAME COLUMN user_type TO user_type;
+--ALTER TABLE user_profile RENAME COLUMN photo TO photo;
+--ALTER TABLE user_profile RENAME COLUMN photo_link TO photo_link;
+--ALTER TABLE user_profile RENAME COLUMN comment TO comment;
+--ALTER TABLE user_profile RENAME COLUMN reg_date TO reg_date;
+--ALTER TABLE user_profile RENAME COLUMN permit_type TO permit_type;
+--ALTER TABLE user_profile RENAME COLUMN renew_date TO renew_date;
+--ALTER TABLE user_profile RENAME COLUMN renew_text TO renew_text;
+--ALTER TABLE user_profile RENAME COLUMN new_user TO new_user;
+--ALTER TABLE user_profile RENAME COLUMN driver_permission TO driver_permission;
+--ALTER TABLE user_profile RENAME COLUMN license_country TO license_country;
+--ALTER TABLE user_profile RENAME COLUMN max_passengers TO max_passengers;
 
 -- Clean up column names for user_comments
 --ALTER TABLE user_comments RENAME COLUMN id TO id;
