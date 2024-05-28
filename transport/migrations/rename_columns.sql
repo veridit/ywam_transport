@@ -198,9 +198,29 @@ ALTER TABLE driver ALTER COLUMN password SET NOT NULL;
 -- Add missing fields from auth_user table
 ALTER TABLE driver ADD COLUMN last_login timestamp with time zone;
 ALTER TABLE driver ADD COLUMN is_superuser boolean NOT NULL DEFAULT FALSE;
-ALTER TABLE driver ADD COLUMN username varchar(150) NOT NULL UNIQUE;
+
+UPDATE driver
+SET email = 'thor.stensby@uofnkona.org'
+WHERE email = '0'
+  AND first_name = 'Thor'
+  AND last_name = 'Stensby'
+;
+
+UPDATE driver
+SET email = 'mark.han@uofnkona.org'
+WHERE email = '0'
+  AND first_name = 'Mark'
+  AND last_name = 'Han'
+;
+
+ALTER TABLE driver ADD COLUMN username varchar(150) UNIQUE;
+UPDATE driver SET username = email WHERE username IS NULL;
+ALTER TABLE driver ALTER COLUMN username SET NOT NULL;
+
 ALTER TABLE driver ADD COLUMN is_staff boolean NOT NULL DEFAULT FALSE;
-ALTER TABLE driver ADD COLUMN date_joined timestamp with time zone NOT NULL DEFAULT now();
+
+ALTER TABLE driver RENAME reg_date TO date_joined;
+ALTER TABLE driver ALTER COLUMN date_joined SET DEFAULT now();
 
 -- Modify existing email field to match auth_user's constraints
 ALTER TABLE driver ALTER COLUMN email TYPE varchar(254);
