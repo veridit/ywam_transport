@@ -7,11 +7,11 @@ if test -n "$DEBUG"; then
 fi
 
 # When using scripted input, such as "< some.sql" then interactive TTY is required.
-args="-i"
-if test -t 0; then
+args=""
+if ! test -t 0; then
 	# Enable the TTY in docker,with -t
 	# as required for an interactive psql promp
-	args="-ti"
+	args="-T"
 fi
 
 export $(grep -v '^#' .env | xargs)
