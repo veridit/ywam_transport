@@ -1,3 +1,4 @@
+-- add_relationships.sql
 BEGIN;
 
 -- Add foreign key relationships
