@@ -42,6 +42,6 @@ done
 
 mkdir -p tmp
 ./devops/generate_load_file.sh && pgloader tmp/transport.load
-docker-compose run web python manage.py migrate
+docker compose run web python manage.py migrate
 
 popd
