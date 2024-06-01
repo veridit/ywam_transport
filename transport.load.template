@@ -9,5 +9,7 @@ SET work_mem to '16MB', maintenance_work_mem to '512MB'
 CAST type datetime to timestamptz drop default drop not null using zero-dates-to-null,
      type date drop not null using zero-dates-to-null
 
+ALTER SCHEMA 'ywam_transport' RENAME TO 'public'
+
 BEFORE LOAD DO
 $$ create schema if not exists public; $$;
