@@ -39,6 +39,7 @@ until docker compose exec -T db-old mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$
   echo "MariaDB table check failed. Retrying in 1 second... (Attempt: $count)"
   sleep 1
 done
+sleep 1
 
 mkdir -p tmp
 ./devops/generate_load_file.sh && pgloader tmp/transport.load
