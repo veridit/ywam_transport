@@ -1,11 +1,5 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class AbandonTrips(models.Model):
@@ -13,7 +7,7 @@ class AbandonTrips(models.Model):
     abandon_date = models.DateTimeField(blank=True, null=True)
     notes = models.TextField()
     reservation = models.ForeignKey('Reservations', models.DO_NOTHING)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     mile_charges = models.FloatField()
     calculate_fine = models.BooleanField()
     miles = models.SmallIntegerField()
@@ -65,7 +59,7 @@ class RestrictedCharges(models.Model):
 
 class Vehicles(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     vehicle_no = models.CharField(max_length=12)
     vin_no = models.CharField(max_length=20)
     oil_filter = models.CharField(max_length=20)
@@ -116,7 +110,7 @@ class TempMassEmails(models.Model):
 
 
 class Driver(models.Model):
-    user = models.OneToOneField('AuthUser', models.DO_NOTHING)
+    user = models.OneToOneField(User, models.DO_NOTHING)
     department = models.ForeignKey('Departments', models.DO_NOTHING)
     phone = models.CharField(max_length=25)
     birth_date = models.DateField(blank=True, null=True)
@@ -166,7 +160,7 @@ class VehicleLimit(models.Model):
     id = models.BigAutoField(primary_key=True)
     option = models.SmallIntegerField()
     department = models.ForeignKey(Departments, models.DO_NOTHING)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     from_date = models.DateField(blank=True, null=True)
     to_date = models.DateField(blank=True, null=True)
     limit_value = models.SmallIntegerField()
@@ -179,7 +173,7 @@ class VehicleLimit(models.Model):
 class Reservations(models.Model):
     id = models.BigAutoField(primary_key=True)
     vehicle = models.ForeignKey(Vehicles, models.DO_NOTHING)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     planned_passenger_no = models.CharField(max_length=2)
     coordinator_approval = models.CharField(max_length=15)
     planned_departure_datetime = models.DateTimeField(blank=True, null=True)
@@ -207,7 +201,7 @@ class Reservations(models.Model):
 
 class CommentLog(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     comments = models.TextField()
     comment_time = models.DateTimeField()
 
@@ -218,7 +212,7 @@ class CommentLog(models.Model):
 
 class Log(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     login_datetime = models.DateTimeField(blank=True, null=True)
     logout_datetime = models.DateTimeField(blank=True, null=True)
     ip_address = models.CharField(max_length=16)
@@ -230,7 +224,7 @@ class Log(models.Model):
 
 class ShopTasks(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     vehicle = models.ForeignKey(Vehicles, models.DO_NOTHING)
     mileage_reading = models.CharField(max_length=7)
     last_mileage = models.CharField(max_length=7)
@@ -262,7 +256,7 @@ class WorkType(models.Model):
 class SpecialNotice(models.Model):
     id = models.BigAutoField(primary_key=True)
     notice_date = models.DateTimeField(blank=True, null=True)
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING)
+    user = models.ForeignKey(User, models.DO_NOTHING)
     title = models.CharField(max_length=255)
     notice = models.TextField()
 
@@ -304,7 +298,7 @@ class TripDetails(models.Model):
     problem_description = models.TextField()
     reg_date = models.DateTimeField()
     mile_charges = models.FloatField()
-    user = models.ForeignKey('AuthUser', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
