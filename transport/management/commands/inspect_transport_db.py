@@ -23,7 +23,6 @@ class Command(BaseCommand):
         # Remove `Transport` prefix from model names and references
         models_content = re.sub(r'\bTransport([A-Z]\w*)\b', r'\1', models_content)
         models_content = re.sub(r'\'Transport([A-Z]\w*)\'', r'\'\1\'', models_content)
-        models_content = re.sub(r'transport_', '', models_content)
 
         # Write the final models to transport/models.py
         with open('transport/models.py', 'w') as models_file:
