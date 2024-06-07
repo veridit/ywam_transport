@@ -163,11 +163,12 @@ ALTER TABLE transport_service_reservations RENAME COLUMN to_date TO to_datetime;
 --ALTER TABLE transport_service_reservations RENAME COLUMN service_type TO service_type;
 
 -- Clean up column names for service_reservations_details
+ALTER TABLE transport_service_reservations_details ADD COLUMN id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY;
 ALTER TABLE transport_service_reservations_details RENAME COLUMN srvc_id TO service_reservation_id;
 ALTER TABLE transport_service_reservations_details RENAME COLUMN res_id TO reservation_id;
 
 -- Clean up column names for temp_mass_emails
-ALTER TABLE transport_temp_mass_emails ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE transport_temp_mass_emails ADD COLUMN id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY;
 ALTER TABLE transport_temp_mass_emails RENAME COLUMN email_id TO email;
 --ALTER TABLE transport_temp_mass_emails RENAME COLUMN driver_name TO driver_name;
 

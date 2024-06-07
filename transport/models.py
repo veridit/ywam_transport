@@ -27,6 +27,7 @@ class GlobalSettings(models.Model):
 
 
 class InfoLinks(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     text = models.TextField()
     link_date = models.DateTimeField(blank=True, null=True)
@@ -90,6 +91,7 @@ class Vehicles(models.Model):
 
 
 class InfoLinksPosition(models.Model):
+    id = models.AutoField(primary_key=True)
     link = models.ForeignKey(InfoLinks, models.DO_NOTHING)
     position = models.IntegerField()
     driver_login = models.BooleanField()
@@ -101,6 +103,7 @@ class InfoLinksPosition(models.Model):
 
 
 class TempMassEmails(models.Model):
+    id = models.AutoField(primary_key=True)
     email = models.CharField(max_length=250)
     driver_name = models.CharField(max_length=50)
 
@@ -110,6 +113,7 @@ class TempMassEmails(models.Model):
 
 
 class Driver(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, models.DO_NOTHING)
     department = models.ForeignKey('Departments', models.DO_NOTHING)
     phone = models.CharField(max_length=25)
@@ -246,6 +250,7 @@ class ShopTasks(models.Model):
 
 
 class WorkType(models.Model):
+    id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=255)
 
     class Meta:
@@ -280,6 +285,7 @@ class ServiceReservations(models.Model):
 
 
 class ServiceReservationsDetails(models.Model):
+    id = models.AutoField(primary_key=True)
     service_reservation = models.ForeignKey(ServiceReservations, models.DO_NOTHING)
     reservation = models.ForeignKey(Reservations, models.DO_NOTHING)
 
@@ -319,6 +325,7 @@ class DriverComments(models.Model):
 
 
 class VehicleBrand(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
     class Meta:
@@ -327,6 +334,7 @@ class VehicleBrand(models.Model):
 
 
 class VehicleType(models.Model):
+    id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=255)
     capacity = models.SmallIntegerField()
 
