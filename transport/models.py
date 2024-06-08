@@ -192,9 +192,9 @@ class Reservations(models.Model):
     key_no = models.CharField(max_length=4, blank=True, null=True)
     card_no = models.CharField(max_length=8, blank=True, null=True)
     billing_department = models.ForeignKey(Departments, models.DO_NOTHING, db_column='billing_department')
-    assigned_driver = models.ForeignKey(Driver, models.DO_NOTHING, db_column='assigned_driver')
+    assigned_driver = models.ForeignKey(Driver, models.DO_NOTHING, db_column='assigned_driver', related_name='assigned_reservations')
     repeating = models.BooleanField()
-    deleted_by_driver = models.ForeignKey(Driver, models.DO_NOTHING, db_column='deleted_by_driver', blank=True, null=True)
+    deleted_by_driver = models.ForeignKey(Driver, models.DO_NOTHING, db_column='deleted_by_driver', blank=True, null=True, related_name='deleted_reservations')
     deleted_datetime = models.DateTimeField(blank=True, null=True)
     no_cost = models.BooleanField()
 
@@ -313,8 +313,8 @@ class TripDetails(models.Model):
 
 class DriverComments(models.Model):
     id = models.BigAutoField(primary_key=True)
-    posting_user = models.ForeignKey(Driver, models.DO_NOTHING)
-    about_user = models.ForeignKey(Driver, models.DO_NOTHING)
+    posting_user = models.ForeignKey(Driver, models.DO_NOTHING, related_name='comments_posting',)
+    about_user = models.ForeignKey(Driver, models.DO_NOTHING, related_name='comments_about',)
     comments_date = models.DateTimeField()
     comments = models.TextField()
     trip = models.ForeignKey(TripDetails, models.DO_NOTHING, blank=True, null=True)
