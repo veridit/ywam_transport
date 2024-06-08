@@ -13,7 +13,7 @@ services:
       - "3406:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./old/20240513.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
+      - ./tmp/transport-dump.sql:/docker-entrypoint-initdb.d/mysql_init.sql:ro
 
   db:
     image: postgres:13
