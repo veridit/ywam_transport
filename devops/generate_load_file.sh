@@ -15,7 +15,7 @@ export $(grep -v '^#' .env | xargs)
 
 mkdir -p tmp
 
-# Replace placeholders in transport.load.template and create transport.load
+# Replace placeholders in devops/transport.load.template and create transport.load
 sed -e "s/{{MYSQL_USER}}/$MYSQL_USER/g" \
     -e "s/{{MYSQL_PASSWORD}}/$MYSQL_PASSWORD/g" \
     -e "s/{{MYSQL_DATABASE}}/$MYSQL_DATABASE/g" \
@@ -26,4 +26,4 @@ sed -e "s/{{MYSQL_USER}}/$MYSQL_USER/g" \
     -e "s/{{POSTGRES_DB}}/$POSTGRES_DB/g" \
     -e "s/{{POSTGRES_HOST}}/$POSTGRES_HOST/g" \
     -e "s/{{POSTGRES_PORT}}/$POSTGRES_PORT/g" \
-    transport.load.template > tmp/transport.load
+    devops/transport.load.template > tmp/transport.load
