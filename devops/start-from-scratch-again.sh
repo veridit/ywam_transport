@@ -15,7 +15,10 @@ export $(grep -v '^#' .env | xargs)
 
 # Fetch the data only if older than 1 day
 if [[ ! -f "tmp/transport-dump.sql" || $(find "tmp/transport-dump.sql" -mtime +1) ]]; then
+  echo "Downloading latest mysql data"
   ssh ec2-user@transportation.uofnkona.edu mysqldump -u"$OLD_MYSQL_USER" "$OLD_MYSQL_DATABASE" -p"$OLD_MYSQL_PASSWORD" > tmp/transport-dump.sql
+else
+  echo "Using exising mysql data"
 fi
 
 docker compose down --volumes
