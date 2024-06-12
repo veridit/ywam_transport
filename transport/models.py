@@ -11,18 +11,28 @@ class AbandonTrips(models.Model):
     calculate_fine = models.BooleanField(default=False)
     miles = models.SmallIntegerField(default=25)
 
+    def __str__(self):
+        return f"Trip {self.id} by {self.user}"
+
     class Meta:
         managed = True
         db_table = 'transport_abandon_trips'
+        verbose_name = "Abandon Trip"
+        verbose_name_plural = "Abandon Trips"
 
 
 class GlobalSettings(models.Model):
     id = models.BigIntegerField(primary_key=True)
     leader_code = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.leader_code
+
     class Meta:
         managed = True
         db_table = 'transport_global_settings'
+        verbose_name = "Global Setting"
+        verbose_name_plural = "Global Settings"
 
 
 class InfoLinks(models.Model):
@@ -34,9 +44,14 @@ class InfoLinks(models.Model):
     display_page = models.CharField(max_length=25)
     display_flag = models.CharField(max_length=1, blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         managed = True
         db_table = 'transport_info_links'
+        verbose_name = "Info Link"
+        verbose_name_plural = "Info Links"
 
 
 class RestrictedCharges(models.Model):
@@ -52,9 +67,14 @@ class RestrictedCharges(models.Model):
     rate = models.FloatField(blank=True, null=True)
     reg_date = models.DateTimeField(blank=True, null=True)
 
+    def __str__(self):
+        return f"Charge {self.id} for {self.vehicle}"
+
     class Meta:
         managed = True
         db_table = 'transport_restricted_charges'
+        verbose_name = "Restricted Charge"
+        verbose_name_plural = "Restricted Charges"
 
 
 class Vehicles(models.Model):
@@ -84,9 +104,14 @@ class Vehicles(models.Model):
     sold_date = models.DateField(blank=True, null=True)
     admin_issues = models.TextField()
 
+    def __str__(self):
+        return self.vehicle_no
+
     class Meta:
         managed = True
         db_table = 'transport_vehicles'
+        verbose_name = "Vehicle"
+        verbose_name_plural = "Vehicles"
 
 
 class InfoLinksPosition(models.Model):
@@ -95,9 +120,14 @@ class InfoLinksPosition(models.Model):
     position = models.IntegerField()
     driver_login = models.BooleanField()
 
+    def __str__(self):
+        return f"Position {self.position} for {self.link.title}"
+
     class Meta:
         managed = True
         db_table = 'transport_info_links_position'
+        verbose_name = "Info Link Position"
+        verbose_name_plural = "Info Links Positions"
 
 
 class TempMassEmails(models.Model):
@@ -105,9 +135,14 @@ class TempMassEmails(models.Model):
     email = models.CharField(max_length=250)
     driver_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.email
+
     class Meta:
         managed = True
         db_table = 'transport_temp_mass_emails'
+        verbose_name = "Temp Mass Email"
+        verbose_name_plural = "Temp Mass Emails"
 
 
 class Driver(models.Model):
@@ -136,9 +171,14 @@ class Driver(models.Model):
     driver_permission = models.BooleanField(default=False)
     max_passengers = models.BigIntegerField(default=15)
 
+    def __str__(self):
+        return self.user.username
+
     class Meta:
         managed = True
         db_table = 'transport_driver'
+        verbose_name = "Driver"
+        verbose_name_plural = "Drivers"
 
 
 class Departments(models.Model):
@@ -153,9 +193,14 @@ class Departments(models.Model):
     deactive_date = models.DateField(blank=True, null=True)
     info = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = True
         db_table = 'transport_departments'
+        verbose_name = "Department"
+        verbose_name_plural = "Departments"
 
 
 class VehicleLimit(models.Model):
@@ -167,9 +212,14 @@ class VehicleLimit(models.Model):
     to_date = models.DateField(blank=True, null=True)
     limit_value = models.SmallIntegerField(default=3)
 
+    def __str__(self):
+        return f"Limit {self.id} for {self.department.name}"
+
     class Meta:
         managed = True
         db_table = 'transport_vehicle_limit'
+        verbose_name = "Vehicle Limit"
+        verbose_name_plural = "Vehicle Limits"
 
 
 class Reservations(models.Model):
@@ -196,9 +246,14 @@ class Reservations(models.Model):
     deleted_datetime = models.DateTimeField(blank=True, null=True)
     no_cost = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Reservation {self.id} for {self.vehicle}"
+
     class Meta:
         managed = True
         db_table = 'transport_reservations'
+        verbose_name = "Reservation"
+        verbose_name_plural = "Reservations"
 
 
 class CommentLog(models.Model):
@@ -207,9 +262,14 @@ class CommentLog(models.Model):
     comments = models.TextField()
     comment_time = models.DateTimeField(default=models.functions.Now())
 
+    def __str__(self):
+        return f"Comment by {self.user}"
+
     class Meta:
         managed = True
         db_table = 'transport_comment_log'
+        verbose_name = "Comment Log"
+        verbose_name_plural = "Comment Logs"
 
 
 class Log(models.Model):
@@ -219,9 +279,14 @@ class Log(models.Model):
     logout_datetime = models.DateTimeField(blank=True, null=True)
     ip_address = models.CharField(max_length=16)
 
+    def __str__(self):
+        return f"Log {self.id} by {self.user}"
+
     class Meta:
         managed = True
         db_table = 'transport_log'
+        verbose_name = "Log"
+        verbose_name_plural = "Logs"
 
 
 class ShopTasks(models.Model):
@@ -242,18 +307,28 @@ class ShopTasks(models.Model):
     invoice_no = models.CharField(max_length=50)
     vendor_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f"Task {self.id} for {self.vehicle}"
+
     class Meta:
         managed = True
         db_table = 'transport_shop_tasks'
+        verbose_name = "Shop Task"
+        verbose_name_plural = "Shop Tasks"
 
 
 class WorkType(models.Model):
     id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.type
+
     class Meta:
         managed = True
         db_table = 'transport_work_type'
+        verbose_name = "Work Type"
+        verbose_name_plural = "Work Types"
 
 
 class SpecialNotice(models.Model):
@@ -263,9 +338,14 @@ class SpecialNotice(models.Model):
     title = models.CharField(max_length=255)
     notice = models.TextField()
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         managed = True
         db_table = 'transport_special_notice'
+        verbose_name = "Special Notice"
+        verbose_name_plural = "Special Notices"
 
 
 class ServiceReservations(models.Model):
@@ -277,9 +357,14 @@ class ServiceReservations(models.Model):
     is_cancelled = models.BooleanField(default=False)
     service_type = models.CharField(max_length=15)
 
+    def __str__(self):
+        return f"Service Reservation {self.id} for {self.vehicle}"
+
     class Meta:
         managed = True
         db_table = 'transport_service_reservations'
+        verbose_name = "Service Reservation"
+        verbose_name_plural = "Service Reservations"
 
 
 class ServiceReservationsDetails(models.Model):
@@ -287,9 +372,14 @@ class ServiceReservationsDetails(models.Model):
     service_reservation = models.ForeignKey(ServiceReservations, on_delete=models.CASCADE)
     reservation = models.ForeignKey(Reservations, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"Detail {self.id} for {self.service_reservation}"
+
     class Meta:
         managed = True
         db_table = 'transport_service_reservations_details'
+        verbose_name = "Service Reservation Detail"
+        verbose_name_plural = "Service Reservation Details"
 
 
 class TripDetails(models.Model):
@@ -304,9 +394,14 @@ class TripDetails(models.Model):
     mile_charges = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
 
+    def __str__(self):
+        return f"Trip {self.id} for {self.reservation}"
+
     class Meta:
         managed = True
         db_table = 'transport_trip_details'
+        verbose_name = "Trip Detail"
+        verbose_name_plural = "Trip Details"
 
 
 class DriverComments(models.Model):
@@ -317,18 +412,28 @@ class DriverComments(models.Model):
     comments = models.TextField()
     trip = models.ForeignKey(TripDetails, on_delete=models.SET_NULL, blank=True, null=True)
 
+    def __str__(self):
+        return f"Comment by {self.posting_user} about {self.about_user}"
+
     class Meta:
         managed = True
         db_table = 'transport_driver_comments'
+        verbose_name = "Driver Comment"
+        verbose_name_plural = "Driver Comments"
 
 
 class VehicleBrand(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         managed = True
         db_table = 'transport_vehicle_brand'
+        verbose_name = "Vehicle Brand"
+        verbose_name_plural = "Vehicle Brands"
 
 
 class VehicleType(models.Model):
@@ -336,9 +441,14 @@ class VehicleType(models.Model):
     type = models.CharField(max_length=255)
     capacity = models.SmallIntegerField()
 
+    def __str__(self):
+        return self.type
+
     class Meta:
         managed = True
         db_table = 'transport_vehicle_type'
+        verbose_name = "Vehicle Type"
+        verbose_name_plural = "Vehicle Types"
 
 
 class VehicleComments(models.Model):
@@ -349,6 +459,11 @@ class VehicleComments(models.Model):
     type = models.CharField(max_length=25)
     comments = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f"Comment {self.id} for {self.vehicle}"
+
     class Meta:
         managed = True
         db_table = 'transport_vehicle_comments'
+        verbose_name = "Vehicle Comment"
+        verbose_name_plural = "Vehicle Comments"
