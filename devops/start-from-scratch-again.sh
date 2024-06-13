@@ -56,4 +56,8 @@ mkdir -p tmp
 pgloader tmp/transport.load
 docker compose run web python manage.py migrate
 
+# Creates the super user with the variables from the .env file previously loaed.
+docker-compose run -e DJANGO_SUPERUSER_USERNAME -e DJANGO_SUPERUSER_EMAIL -e DJANGO_SUPERUSER_PASSWORD web python manage.py createsuperuser --noinput
+
+
 popd
