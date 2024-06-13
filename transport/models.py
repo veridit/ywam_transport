@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class AbandonTrips(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -188,7 +189,7 @@ class Departments(models.Model):
     leader_last_name = models.CharField(max_length=15)
     leader_phone = models.CharField(max_length=25)
     leader_email = models.CharField(max_length=150)
-    reg_date = models.DateTimeField(default=models.functions.Now())
+    reg_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
     deactive_date = models.DateField(blank=True, null=True)
     info = models.CharField(max_length=200)
@@ -234,7 +235,7 @@ class Reservations(models.Model):
     child_seat = models.BooleanField()
     destination = models.CharField(max_length=100)
     reservation_cancelled = models.BooleanField(default=False)
-    reg_date = models.DateTimeField(default=models.functions.Now())
+    reg_date = models.DateTimeField(default=timezone.now)
     cancelled_by_driver = models.BooleanField(default=False)
     driver_cancelled_time = models.DateTimeField(blank=True, null=True)
     key_no = models.CharField(max_length=4, blank=True, null=True)
@@ -260,7 +261,7 @@ class CommentLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comments = models.TextField()
-    comment_time = models.DateTimeField(default=models.functions.Now())
+    comment_time = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Comment by {self.user}"
@@ -303,7 +304,7 @@ class ShopTasks(models.Model):
     drive_test_done = models.BooleanField()
     task_complete = models.BooleanField()
     technician_comments = models.TextField()
-    reg_date = models.DateTimeField(default=models.functions.Now())
+    reg_date = models.DateTimeField(default=timezone.now)
     invoice_no = models.CharField(max_length=50)
     vendor_name = models.CharField(max_length=50)
 
@@ -350,7 +351,7 @@ class SpecialNotice(models.Model):
 
 class ServiceReservations(models.Model):
     id = models.BigAutoField(primary_key=True)
-    reg_date = models.DateTimeField(default=models.functions.Now())
+    reg_date = models.DateTimeField(default=timezone.now)
     vehicle = models.ForeignKey(Vehicles, on_delete=models.RESTRICT, db_column='vehicle_id')
     from_datetime = models.DateTimeField(blank=True, null=True)
     to_datetime = models.DateTimeField(blank=True, null=True)
@@ -390,7 +391,7 @@ class TripDetails(models.Model):
     end_gas_percent = models.CharField(max_length=4)
     problem = models.BooleanField()
     problem_description = models.TextField()
-    reg_date = models.DateTimeField(default=models.functions.Now())
+    reg_date = models.DateTimeField(default=timezone.now)
     mile_charges = models.FloatField()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -408,7 +409,7 @@ class DriverComments(models.Model):
     id = models.BigAutoField(primary_key=True)
     posting_user = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name='comments_posting')
     about_user = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name='comments_about')
-    comments_date = models.DateTimeField(default=models.functions.Now())
+    comments_date = models.DateTimeField(default=timezone.now)
     comments = models.TextField()
     trip = models.ForeignKey(TripDetails, on_delete=models.SET_NULL, blank=True, null=True)
 
