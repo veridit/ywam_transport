@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'transport',
 ]
+
+UNFOLD = {
+    'SITE_TITLE': 'YWAM Transport',
+    'SITE_HEAD': 'Transportation Portal',
+    'SITE_HEADER': 'Admin',
+    'SITE_LOGO': '/images/logo.webp',
+    'COPYRIGHT': 'Veridit as',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,6 +134,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
