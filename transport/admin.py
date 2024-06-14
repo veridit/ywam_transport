@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 from unfold.admin import ModelAdmin
 from .models import (
     AbandonTrips, GlobalSettings, InfoLinks, RestrictedCharges, Vehicles,
@@ -7,6 +9,12 @@ from .models import (
     ServiceReservations, ServiceReservationsDetails, TripDetails,
     DriverComments, VehicleBrand, VehicleType, VehicleComments
 )
+
+
+admin.site.unregister(User)
+@admin.register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    pass
 
 @admin.register(AbandonTrips)
 class AbandonTripsAdmin(ModelAdmin):
