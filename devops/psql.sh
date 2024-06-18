@@ -15,4 +15,4 @@ if ! test -t 0; then
 fi
 
 export $(grep -v '^#' .env | xargs)
-docker compose exec $args db psql -U $POSTGRES_USER -d $POSTGRES_DB
+docker compose exec $args db psql -U $POSTGRES_USER -d $POSTGRES_DB "$@"
