@@ -47,7 +47,7 @@ UNFOLD = {
     'SITE_TITLE': 'YWAM Transport',
     'SITE_HEAD': 'Transportation Portal',
     'SITE_HEADER': 'Admin',
-    'SITE_LOGO': '/static/images/logo.webp',
+    'SITE_LOGO': '/static/images/logo.png',
     'COPYRIGHT': 'Veridit as',
 }
 
