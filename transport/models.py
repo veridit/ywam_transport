@@ -469,3 +469,37 @@ class VehicleComments(models.Model):
         db_table = 'transport_vehicle_comments'
         verbose_name = "Vehicle Comment"
         verbose_name_plural = "Vehicle Comments"
+
+
+from django.db import models
+
+class EmailTemplate(models.Model):
+    class Event(models.TextChoices):
+        DRIVER_REGISTERED = 'driver_registered', 'Driver Registered'
+        DRIVER_ACTIVATED = 'driver_activated', 'Driver Activated'
+        DEPT_CROSS_CHARGE_NOTICE = 'dept_cross_charge_notice', 'Dept. Cross Charge Notice'
+        VEHICLE_REMOVED_FOR_SERVICE = 'vehicle_removed_for_service', 'Vehicle Removed for Service'
+        DRIVER_DEACTIVATION_NOTICE = 'driver_deactivation_notice', 'Driver Deactivation Notice'
+        RESTORE_SUSPENDED_DRIVER = 'restore_suspended_driver', 'Restore Suspended Driver'
+        ACTIVATE_RESTORE_VEHICLE = 'activate_restore_vehicle', 'Activate - Restore Vehicle'
+        PERMIT_RENEWAL = 'permit_renewal', 'Permit Renewal'
+        LATE_TRIP_CANCELLATION = 'late_trip_cancellation', 'Late Trip Cancellation'
+        ABANDON_NOTICE_WITH_CHARGE = 'abandon_notice_with_charge', 'Abandon Notice with Charge'
+
+    id = models.AutoField(primary_key=True)
+    event = models.CharField(max_length=50, choices=Event.choices, unique=True)
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    variables = models.JSONField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.event} {self.subject}"
+
+    class Meta:
+        managed = True
+        db_table = 'transport_email_template'
+        verbose_name = "Email Template"
+        verbose_name_plural = "Email Templates"

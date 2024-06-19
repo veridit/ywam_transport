@@ -1,14 +1,18 @@
 # transport/admin.py
+from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
+from django.db import models
 from unfold.admin import ModelAdmin
+from unfold.contrib.forms.widgets import WysiwygWidget
 from .models import (
     AbandonTrips, GlobalSettings, InfoLinks, RestrictedCharges, Vehicles,
     InfoLinksPosition, TempMassEmails, Driver, Departments, VehicleLimit,
     Reservations, CommentLog, Log, ShopTasks, WorkType, SpecialNotice,
     ServiceReservations, ServiceReservationsDetails, TripDetails,
-    DriverComments, VehicleBrand, VehicleType, VehicleComments
+    DriverComments, VehicleBrand, VehicleType, VehicleComments,
+    EmailTemplate
 )
 
 admin.site.unregister(User)
@@ -163,3 +167,35 @@ class VehicleCommentsAdmin(ModelAdmin):
     search_fields = ('posting_user__user__username', 'vehicle__vehicle_no', 'comments')
     list_filter = ('comment_date', 'type')
     autocomplete_fields = ['posting_user', 'vehicle']
+
+@admin.register(EmailTemplate)
+class EmailTemplateAdmin(ModelAdmin):
+    class EmailTemplateForm(forms.ModelForm):
+        class Meta:
+            model = EmailTemplate
+            fields = '__all__'
+            widgets = {
+                'body': WysiwygWidget,
+            }
+
+    form = EmailTemplateForm
+
+    list_display = ('event', 'subject', 'updated_at')
+    search_fields = ('subject', 'body')
+    list_filter = ('event', 'created_at', 'updated_at')
+    ordering = ('event',)
+
+    def formatted_variables(self, obj):
+        variables = obj.variables  # Directly access the list
+        return ' '.join([f'{{{{{var}}}}}' for var in variables])
+
+    formatted_variables.short_description = 'Variables'
+
+    readonly_fields = ('event','formatted_variables',)
+    fields = ('event', 'subject', 'formatted_variables', 'body')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
