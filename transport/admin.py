@@ -92,7 +92,7 @@ class VehiclesAdmin(ModelAdmin):
     autocomplete_fields = ['user', 'make', 'model']
 
     def changelist_view(self, request, extra_context=None):
-        if 'active' not in request.GET and 'all' not in request.GET:
+        if 'active' not in request.GET and 'q' not in request.GET:
             q = request.GET.copy()
             q['active'] = '1'
             return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
@@ -130,7 +130,7 @@ class DepartmentsAdmin(ModelAdmin):
     list_filter = (DefaultTrueBooleanSimpleListFilter,)
 
     def changelist_view(self, request, extra_context=None):
-        if 'active' not in request.GET and 'all' not in request.GET:
+        if 'active' not in request.GET and 'q' not in request.GET:
             q = request.GET.copy()
             q['active'] = '1'
             return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
