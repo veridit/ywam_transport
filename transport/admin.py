@@ -99,7 +99,8 @@ class VehiclesAdmin(ModelAdmin):
         return super().changelist_view(request, extra_context=extra_context)
 
     def get_search_results(self, request, queryset, search_term):
-        queryset = queryset.filter(active=True)
+        if (request.path == '/admin/autocomplete/'):
+            queryset = queryset.filter(active=True)
         return super().get_search_results(request, queryset, search_term)
 
 
@@ -137,7 +138,8 @@ class DepartmentsAdmin(ModelAdmin):
         return super().changelist_view(request, extra_context=extra_context)
 
     def get_search_results(self, request, queryset, search_term):
-        queryset = queryset.filter(active=True)
+        if (request.path == '/admin/autocomplete/'):
+            queryset = queryset.filter(active=True)
         return super().get_search_results(request, queryset, search_term)
 
 @admin.register(VehicleLimit)
