@@ -4,6 +4,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.db import models
+from django.http import HttpResponseRedirect
+from django.utils.translation import gettext_lazy as _
+from urllib.parse import urlencode
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
 from .models import (
@@ -14,6 +17,42 @@ from .models import (
     DriverComments, VehicleBrand, VehicleType, VehicleComments,
     EmailTemplate
 )
+
+
+class DefaultTrueBooleanSimpleListFilter(admin.SimpleListFilter):
+    title = 'Active'
+    parameter_name = 'active'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('1', _('Yes')),
+            ('0', _('No')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == '1':
+            return queryset.filter(active=True)
+        elif self.value() == '0':
+            return queryset.filter(active=False)
+        else:
+            return queryset
+
+    def choices(self, changelist):
+        yield {
+            'selected': self.value() is None or self.value() == '',
+            'query_string': changelist.get_query_string(
+                {self.parameter_name: ''},
+            ),
+            'display': _('All'),
+        }
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == str(lookup),
+                'query_string': changelist.get_query_string({
+                    self.parameter_name: lookup,
+                }),
+                'display': title,
+            }
 
 admin.site.unregister(User)
 
@@ -49,8 +88,16 @@ class RestrictedChargesAdmin(ModelAdmin):
 class VehiclesAdmin(ModelAdmin):
     list_display = ('id', 'user', 'vehicle_no', 'vin_no', 'make', 'model', 'manufacture_year', 'active', 'restricted', 'sold')
     search_fields = ('vehicle_no', 'vin_no', 'license_plate_no', 'make__name', 'model__type')
-    list_filter = ('make', 'model', 'active', 'restricted', 'sold')
+    list_filter = ('make', 'model', DefaultTrueBooleanSimpleListFilter, 'restricted', 'sold')
     autocomplete_fields = ['user', 'make', 'model']
+
+    def changelist_view(self, request, extra_context=None):
+        if 'active' not in request.GET and 'all' not in request.GET:
+            q = request.GET.copy()
+            q['active'] = '1'
+            return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
+        return super().changelist_view(request, extra_context=extra_context)
+
 
 @admin.register(InfoLinksPosition)
 class InfoLinksPositionAdmin(ModelAdmin):
@@ -75,7 +122,16 @@ class DriverAdmin(ModelAdmin):
 class DepartmentsAdmin(ModelAdmin):
     list_display = ('id', 'name', 'leader_first_name', 'leader_last_name', 'leader_phone', 'leader_email', 'active')
     search_fields = ('name', 'leader_first_name', 'leader_last_name', 'leader_email')
-    list_filter = ('active',)
+
+    list_filter = (DefaultTrueBooleanSimpleListFilter,)
+
+    def changelist_view(self, request, extra_context=None):
+        if 'active' not in request.GET and 'all' not in request.GET:
+            q = request.GET.copy()
+            q['active'] = '1'
+            return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
+        return super().changelist_view(request, extra_context=extra_context)
+
 
 @admin.register(VehicleLimit)
 class VehicleLimitAdmin(ModelAdmin):
