@@ -98,6 +98,10 @@ class VehiclesAdmin(ModelAdmin):
             return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
         return super().changelist_view(request, extra_context=extra_context)
 
+    def get_search_results(self, request, queryset, search_term):
+        queryset = queryset.filter(active=True)
+        return super().get_search_results(request, queryset, search_term)
+
 
 @admin.register(InfoLinksPosition)
 class InfoLinksPositionAdmin(ModelAdmin):
@@ -132,6 +136,9 @@ class DepartmentsAdmin(ModelAdmin):
             return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
         return super().changelist_view(request, extra_context=extra_context)
 
+    def get_search_results(self, request, queryset, search_term):
+        queryset = queryset.filter(active=True)
+        return super().get_search_results(request, queryset, search_term)
 
 @admin.register(VehicleLimit)
 class VehicleLimitAdmin(ModelAdmin):
