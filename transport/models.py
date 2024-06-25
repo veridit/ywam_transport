@@ -107,7 +107,7 @@ class Vehicles(models.Model):
     admin_issues = models.TextField()
 
     def __str__(self):
-        return self.vehicle_no
+        return f"{self.vehicle_no} (max {self.passenger_capacity}) {self.make.name} {self.model.type}"
 
     class Meta:
         managed = True
