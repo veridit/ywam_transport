@@ -89,7 +89,7 @@ class ReservationsAdmin(ModelAdmin):
     list_display = ('id', 'vehicle', 'user', 'planned_passenger_no', 'coordinator_approval', 'planned_departure_datetime', 'planned_return_datetime', 'overnight', 'destination', 'reservation_cancelled')
     search_fields = ('vehicle__vehicle_no', 'user__username', 'destination')
     list_filter = ('coordinator_approval', 'overnight', 'reservation_cancelled', 'repeating', 'no_cost')
-    autocomplete_fields = ['vehicle', 'user']
+    autocomplete_fields = ['vehicle', 'user', 'billing_department', 'assigned_driver', 'deleted_by_driver']
 
 @admin.register(CommentLog)
 class CommentLogAdmin(ModelAdmin):
