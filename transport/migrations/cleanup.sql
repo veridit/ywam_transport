@@ -386,7 +386,25 @@ ALTER TABLE transport_work_type RENAME COLUMN work_type_id TO id;
 ALTER TABLE transport_work_type RENAME COLUMN work_type TO type;
 
 
--- add_relationships.sql
+-- Clean up sequence names according to previous name changes
+ALTER SEQUENCE tbl_3_vehicle_limit_limit_id_seq RENAME TO transport_vehicle_limit_id_seq;
+ALTER SEQUENCE tbl_abandon_trips_abandon_id_seq RENAME TO transport_abandon_trips_id_seq;
+ALTER SEQUENCE tbl_comment_log_comment_id_seq RENAME TO transport_comment_log_id_seq;
+ALTER SEQUENCE tbl_info_links_link_id_seq RENAME TO transport_info_links_id_seq;
+ALTER SEQUENCE tbl_log_log_id_seq RENAME TO transport_log_id_seq;
+ALTER SEQUENCE tbl_reservations_res_id_seq RENAME TO transport_reservations_id_seq;
+ALTER SEQUENCE tbl_restricted_charges_charge_id_seq RENAME TO transport_restricted_charges_id_seq;
+ALTER SEQUENCE tbl_shop_tasks_task_id_seq RENAME TO transport_shop_tasks_id_seq;
+ALTER SEQUENCE tbl_special_notice_notice_id_seq RENAME TO transport_special_notice_id_seq;
+ALTER SEQUENCE tbl_srvc_resvs_srvc_id_seq RENAME TO transport_service_reservations_id_seq;
+ALTER SEQUENCE tbl_trip_details_trip_id_seq RENAME TO transport_trip_details_id_seq;
+ALTER SEQUENCE tbl_user_comments_id_seq RENAME TO transport_driver_comments_id_seq;
+ALTER SEQUENCE tbl_vehicle_brand_brand_id_seq RENAME TO transport_vehicle_brand_id_seq;
+ALTER SEQUENCE tbl_vehicle_comments_id_seq RENAME TO transport_vehicle_comments_id_seq;
+ALTER SEQUENCE tbl_vehicle_type_v_type_id_seq RENAME TO transport_vehicle_type_id_seq;
+ALTER SEQUENCE tbl_vehicles_vehicle_id_seq RENAME TO transport_vehicles_id_seq;
+ALTER SEQUENCE tbl_work_type_work_type_id_seq RENAME TO transport_work_type_id_seq;
+
 
 -- Add foreign key relationships
 
