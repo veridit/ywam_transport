@@ -22,6 +22,8 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', lambda request: redirect('/transport')),
+    path('transport/', include('transport.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 
