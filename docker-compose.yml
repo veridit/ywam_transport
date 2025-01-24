@@ -34,8 +34,13 @@ services:
 
   web:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     tty: true
+    command: screen -S django bash
+    healthcheck:
+      test: ["CMD", "screen", "-ls"]
+      interval: 1s
+      timeout: 1s
+      retries: 10
     volumes:
       - .:/code
     ports:
