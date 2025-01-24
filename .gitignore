@@ -1,2 +1,5 @@
 # Credentials
 .env
+.aider*
+!.aider.conf.yml
+!.aiderignore
