@@ -26,9 +26,9 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      interval: 1s
+      timeout: 1s
+      retries: 15
     # Uncomment the next line for verbose SQL debugging.
     #command: ["postgres", "-c", "logging_collector=off", "-c", "log_destination=stderr", "-c", "log_statement=all", "-c", "log_connections=on", "-c", "log_disconnections=on", "-c", "log_duration=on"]
 
