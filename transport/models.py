@@ -228,7 +228,7 @@ class Reservations(models.Model):
     id = models.BigAutoField(primary_key=True)
     vehicle = models.ForeignKey(Vehicles, on_delete=models.RESTRICT, db_column='vehicle_id')
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
-    planned_passenger_no = models.CharField(max_length=2)
+    planned_passenger_count = models.CharField(max_length=2)
     coordinator_approval = models.CharField(max_length=15, default='Approved')
     planned_departure_datetime = models.DateTimeField(blank=True, null=True)
     planned_return_datetime = models.DateTimeField(blank=True, null=True)
