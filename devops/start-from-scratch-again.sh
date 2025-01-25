@@ -23,7 +23,7 @@ else
 fi
 
 echo "Removing volumes for clean start"
-docker compose down --volumes
+docker compose down --volumes --remove-orphans
 echo "Starting database services in the background"
 docker compose up -d db db-old
 
