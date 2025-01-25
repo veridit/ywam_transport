@@ -1,4 +1,5 @@
--- ==================================================
+# Table auth_group
+```
                                     Table "public.auth_group"
  Column |          Type          | Collation | Nullable |                Default                 
 --------+------------------------+-----------+----------+----------------------------------------
@@ -12,7 +13,9 @@ Referenced by:
     TABLE "auth_group_permissions" CONSTRAINT "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED
     TABLE "auth_user_groups" CONSTRAINT "auth_user_groups_group_id_97559544_fk_auth_group_id" FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table auth_group_permissions
+```
                                 Table "public.auth_group_permissions"
     Column     |  Type   | Collation | Nullable |                      Default                       
 ---------------+---------+-----------+----------+----------------------------------------------------
@@ -28,7 +31,9 @@ Foreign-key constraints:
     "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED
     "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id" FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table auth_permission
+```
                                         Table "public.auth_permission"
      Column      |          Type          | Collation | Nullable |                   Default                   
 -----------------+------------------------+-----------+----------+---------------------------------------------
@@ -46,7 +51,9 @@ Referenced by:
     TABLE "auth_group_permissions" CONSTRAINT "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm" FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED
     TABLE "auth_user_user_permissions" CONSTRAINT "auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table auth_user
+```
                                         Table "public.auth_user"
     Column    |           Type           | Collation | Nullable |                Default                
 --------------+--------------------------+-----------+----------+---------------------------------------
@@ -80,7 +87,9 @@ Referenced by:
     TABLE "transport_vehicle_limit" CONSTRAINT "transport_vehicle_limit_user_id_2f698599_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE RESTRICT DEFERRABLE
     TABLE "transport_vehicles" CONSTRAINT "transport_vehicles_user_id_084f10a6_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table auth_user_groups
+```
                              Table "public.auth_user_groups"
   Column  |  Type   | Collation | Nullable |                   Default                    
 ----------+---------+-----------+----------+----------------------------------------------
@@ -96,7 +105,9 @@ Foreign-key constraints:
     "auth_user_groups_group_id_97559544_fk_auth_group_id" FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED
     "auth_user_groups_user_id_6a12ed8b_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table auth_user_user_permissions
+```
                                 Table "public.auth_user_user_permissions"
     Column     |  Type   | Collation | Nullable |                        Default                         
 ---------------+---------+-----------+----------+--------------------------------------------------------
@@ -112,7 +123,9 @@ Foreign-key constraints:
     "auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm" FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED
     "auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table django_admin_log
+```
                                          Table "public.django_admin_log"
      Column      |           Type           | Collation | Nullable |                   Default                    
 -----------------+--------------------------+-----------+----------+----------------------------------------------
@@ -134,7 +147,9 @@ Foreign-key constraints:
     "django_admin_log_content_type_id_c4bce8eb_fk_django_co" FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED
     "django_admin_log_user_id_c564eba6_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table django_content_type
+```
                                      Table "public.django_content_type"
   Column   |          Type          | Collation | Nullable |                     Default                     
 -----------+------------------------+-----------+----------+-------------------------------------------------
@@ -148,7 +163,9 @@ Referenced by:
     TABLE "auth_permission" CONSTRAINT "auth_permission_content_type_id_2f476e4b_fk_django_co" FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED
     TABLE "django_admin_log" CONSTRAINT "django_admin_log_content_type_id_c4bce8eb_fk_django_co" FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED
 
--- ==================================================
+```
+# Table django_migrations
+```
                                      Table "public.django_migrations"
  Column  |           Type           | Collation | Nullable |                    Default                    
 ---------+--------------------------+-----------+----------+-----------------------------------------------
@@ -159,7 +176,9 @@ Referenced by:
 Indexes:
     "django_migrations_pkey" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table django_session
+```
                       Table "public.django_session"
     Column    |           Type           | Collation | Nullable | Default 
 --------------+--------------------------+-----------+----------+---------
@@ -171,7 +190,9 @@ Indexes:
     "django_session_expire_date_a5c62663" btree (expire_date)
     "django_session_session_key_c0390e0f_like" btree (session_key varchar_pattern_ops)
 
--- ==================================================
+```
+# Table transport_abandon_trips
+```
                                          Table "public.transport_abandon_trips"
      Column     |           Type           | Collation | Nullable |                       Default                       
 ----------------+--------------------------+-----------+----------+-----------------------------------------------------
@@ -193,7 +214,9 @@ Foreign-key constraints:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON transport_abandon_trips FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_abandon_trips()
 
--- ==================================================
+```
+# Table transport_comment_log
+```
                                         Table "public.transport_comment_log"
     Column    |           Type           | Collation | Nullable |                      Default                      
 --------------+--------------------------+-----------+----------+---------------------------------------------------
@@ -207,7 +230,9 @@ Indexes:
 Foreign-key constraints:
     "transport_comment_log_user_id_7449557a_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_departments
+```
                           Table "public.transport_departments"
       Column       |           Type           | Collation | Nullable |      Default      
 -------------------+--------------------------+-----------+----------+-------------------
@@ -230,7 +255,9 @@ Referenced by:
     TABLE "transport_restricted_charges" CONSTRAINT "transport_restricted_department_id_9c95448e_fk_transport" FOREIGN KEY (department_id) REFERENCES transport_departments(id) ON DELETE RESTRICT DEFERRABLE
     TABLE "transport_vehicle_limit" CONSTRAINT "transport_vehicle_li_department_id_66309f9d_fk_transport" FOREIGN KEY (department_id) REFERENCES transport_departments(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_driver
+```
                                           Table "public.transport_driver"
       Column       |           Type           | Collation | Nullable |                   Default                    
 -------------------+--------------------------+-----------+----------+----------------------------------------------
@@ -273,7 +300,9 @@ Referenced by:
     TABLE "transport_reservations" CONSTRAINT "transport_reservatio_deleted_by_driver_c7405959_fk_transport" FOREIGN KEY (deleted_by_driver) REFERENCES transport_driver(id) ON DELETE SET NULL DEFERRABLE
     TABLE "transport_vehicle_comments" CONSTRAINT "transport_vehicle_co_posting_user_id_9c17d3f4_fk_transport" FOREIGN KEY (posting_user_id) REFERENCES transport_driver(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_driver_comments
+```
                                          Table "public.transport_driver_comments"
      Column      |           Type           | Collation | Nullable |                        Default                        
 -----------------+--------------------------+-----------+----------+-------------------------------------------------------
@@ -293,7 +322,9 @@ Foreign-key constraints:
     "transport_driver_com_posting_user_id_7ebc044b_fk_transport" FOREIGN KEY (posting_user_id) REFERENCES transport_driver(id) ON DELETE CASCADE DEFERRABLE
     "transport_driver_com_trip_id_7325ffae_fk_transport" FOREIGN KEY (trip_id) REFERENCES transport_trip_details(id) ON DELETE SET NULL DEFERRABLE
 
--- ==================================================
+```
+# Table transport_email_template
+```
                                        Table "public.transport_email_template"
    Column   |           Type           | Collation | Nullable |                       Default                        
 ------------+--------------------------+-----------+----------+------------------------------------------------------
@@ -309,7 +340,9 @@ Indexes:
     "transport_email_template_event_b47ea311_like" btree (event varchar_pattern_ops)
     "transport_email_template_event_key" UNIQUE CONSTRAINT, btree (event)
 
--- ==================================================
+```
+# Table transport_global_settings
+```
                Table "public.transport_global_settings"
    Column    |         Type          | Collation | Nullable | Default 
 -------------+-----------------------+-----------+----------+---------
@@ -318,7 +351,9 @@ Indexes:
 Indexes:
     "idx_16420_primary" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table transport_info_links
+```
                                         Table "public.transport_info_links"
     Column    |           Type           | Collation | Nullable |                     Default                      
 --------------+--------------------------+-----------+----------+--------------------------------------------------
@@ -336,7 +371,9 @@ Referenced by:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON transport_info_links FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_info_links()
 
--- ==================================================
+```
+# Table transport_info_links_position
+```
                                Table "public.transport_info_links_position"
     Column    |  Type   | Collation | Nullable |                          Default                          
 --------------+---------+-----------+----------+-----------------------------------------------------------
@@ -350,7 +387,9 @@ Indexes:
 Foreign-key constraints:
     "transport_info_links_link_id_ec5b1832_fk_transport" FOREIGN KEY (link_id) REFERENCES transport_info_links(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_log
+```
                                          Table "public.transport_log"
      Column      |           Type           | Collation | Nullable |                  Default                  
 -----------------+--------------------------+-----------+----------+-------------------------------------------
@@ -365,7 +404,9 @@ Indexes:
 Foreign-key constraints:
     "transport_log_user_id_368ca736_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_reservations
+```
                                                Table "public.transport_reservations"
            Column           |           Type           | Collation | Nullable |                      Default                       
 ----------------------------+--------------------------+-----------+----------+----------------------------------------------------
@@ -410,7 +451,9 @@ Referenced by:
     TABLE "transport_service_reservations_details" CONSTRAINT "transport_service_re_reservation_id_15059748_fk_transport" FOREIGN KEY (reservation_id) REFERENCES transport_reservations(id) ON DELETE CASCADE DEFERRABLE
     TABLE "transport_trip_details" CONSTRAINT "transport_trip_detai_reservation_id_8ee1caf4_fk_transport" FOREIGN KEY (reservation_id) REFERENCES transport_reservations(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_restricted_charges
+```
                                            Table "public.transport_restricted_charges"
        Column       |           Type           | Collation | Nullable |                         Default                          
 --------------------+--------------------------+-----------+----------+----------------------------------------------------------
@@ -436,7 +479,9 @@ Foreign-key constraints:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON transport_restricted_charges FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_restricted_charges()
 
--- ==================================================
+```
+# Table transport_service_reservations
+```
                                         Table "public.transport_service_reservations"
     Column     |           Type           | Collation | Nullable |                          Default                           
 ---------------+--------------------------+-----------+----------+------------------------------------------------------------
@@ -455,7 +500,9 @@ Foreign-key constraints:
 Referenced by:
     TABLE "transport_service_reservations_details" CONSTRAINT "transport_service_re_service_reservation__20e82c51_fk_transport" FOREIGN KEY (service_reservation_id) REFERENCES transport_service_reservations(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_service_reservations_details
+```
                  Table "public.transport_service_reservations_details"
          Column         |  Type   | Collation | Nullable |           Default            
 ------------------------+---------+-----------+----------+------------------------------
@@ -470,7 +517,9 @@ Foreign-key constraints:
     "transport_service_re_reservation_id_15059748_fk_transport" FOREIGN KEY (reservation_id) REFERENCES transport_reservations(id) ON DELETE CASCADE DEFERRABLE
     "transport_service_re_service_reservation__20e82c51_fk_transport" FOREIGN KEY (service_reservation_id) REFERENCES transport_service_reservations(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_shop_tasks
+```
                                            Table "public.transport_shop_tasks"
        Column        |           Type           | Collation | Nullable |                     Default                      
 ---------------------+--------------------------+-----------+----------+--------------------------------------------------
@@ -500,7 +549,9 @@ Foreign-key constraints:
     "transport_shop_tasks_vehicle_id_a0e004fa_fk_transport" FOREIGN KEY (vehicle_id) REFERENCES transport_vehicles(id) ON DELETE RESTRICT DEFERRABLE
     "transport_shop_tasks_work_type_id_a5127d1e_fk_transport" FOREIGN KEY (work_type_id) REFERENCES transport_work_type(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_special_notice
+```
                                        Table "public.transport_special_notice"
    Column    |           Type           | Collation | Nullable |                       Default                        
 -------------+--------------------------+-----------+----------+------------------------------------------------------
@@ -515,7 +566,9 @@ Indexes:
 Foreign-key constraints:
     "transport_special_notice_user_id_77c44512_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_temp_mass_emails
+```
                          Table "public.transport_temp_mass_emails"
    Column    |          Type          | Collation | Nullable |           Default            
 -------------+------------------------+-----------+----------+------------------------------
@@ -525,7 +578,9 @@ Foreign-key constraints:
 Indexes:
     "transport_temp_mass_emails_pkey" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table transport_trip_details
+```
                                            Table "public.transport_trip_details"
        Column        |           Type           | Collation | Nullable |                      Default                       
 ---------------------+--------------------------+-----------+----------+----------------------------------------------------
@@ -549,7 +604,9 @@ Foreign-key constraints:
 Referenced by:
     TABLE "transport_driver_comments" CONSTRAINT "transport_driver_com_trip_id_7325ffae_fk_transport" FOREIGN KEY (trip_id) REFERENCES transport_trip_details(id) ON DELETE SET NULL DEFERRABLE
 
--- ==================================================
+```
+# Table transport_vehicle_brand
+```
                                     Table "public.transport_vehicle_brand"
  Column |          Type          | Collation | Nullable |                       Default                       
 --------+------------------------+-----------+----------+-----------------------------------------------------
@@ -560,7 +617,9 @@ Indexes:
 Referenced by:
     TABLE "transport_vehicles" CONSTRAINT "transport_vehicles_make_id_e017fa97_fk_transport" FOREIGN KEY (make_id) REFERENCES transport_vehicle_brand(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_vehicle_comments
+```
                                         Table "public.transport_vehicle_comments"
      Column      |          Type          | Collation | Nullable |                        Default                         
 -----------------+------------------------+-----------+----------+--------------------------------------------------------
@@ -578,7 +637,9 @@ Foreign-key constraints:
     "transport_vehicle_co_posting_user_id_9c17d3f4_fk_transport" FOREIGN KEY (posting_user_id) REFERENCES transport_driver(id) ON DELETE RESTRICT DEFERRABLE
     "transport_vehicle_co_vehicle_id_a7fe8bd9_fk_transport" FOREIGN KEY (vehicle_id) REFERENCES transport_vehicles(id) ON DELETE CASCADE DEFERRABLE
 
--- ==================================================
+```
+# Table transport_vehicle_limit
+```
                                       Table "public.transport_vehicle_limit"
     Column     |         Type         | Collation | Nullable |                       Default                       
 ---------------+----------------------+-----------+----------+-----------------------------------------------------
@@ -598,7 +659,9 @@ Foreign-key constraints:
     "transport_vehicle_li_department_id_66309f9d_fk_transport" FOREIGN KEY (department_id) REFERENCES transport_departments(id) ON DELETE RESTRICT DEFERRABLE
     "transport_vehicle_limit_user_id_2f698599_fk_auth_user_id" FOREIGN KEY (user_id) REFERENCES auth_user(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_vehicle_type
+```
                                      Table "public.transport_vehicle_type"
   Column  |          Type          | Collation | Nullable |                      Default                       
 ----------+------------------------+-----------+----------+----------------------------------------------------
@@ -610,7 +673,9 @@ Indexes:
 Referenced by:
     TABLE "transport_vehicles" CONSTRAINT "transport_vehicles_model_id_4952d844_fk_transport" FOREIGN KEY (model_id) REFERENCES transport_vehicle_type(id) ON DELETE RESTRICT DEFERRABLE
 
--- ==================================================
+```
+# Table transport_vehicles
+```
                                            Table "public.transport_vehicles"
        Column        |           Type           | Collation | Nullable |                    Default                     
 ---------------------+--------------------------+-----------+----------+------------------------------------------------
@@ -657,7 +722,9 @@ Referenced by:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON transport_vehicles FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_vehicles()
 
--- ==================================================
+```
+# Table transport_work_type
+```
                                     Table "public.transport_work_type"
  Column |          Type          | Collation | Nullable |                     Default                     
 --------+------------------------+-----------+----------+-------------------------------------------------
@@ -668,3 +735,4 @@ Indexes:
 Referenced by:
     TABLE "transport_shop_tasks" CONSTRAINT "transport_shop_tasks_work_type_id_a5127d1e_fk_transport" FOREIGN KEY (work_type_id) REFERENCES transport_work_type(id) ON DELETE RESTRICT DEFERRABLE
 
+```

@@ -17,6 +17,8 @@ tables=$(docker compose exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c
 
 # Iterate over the array and dump the structure for each table
 for table in $tables; do
-  echo "-- =================================================="
+  echo "# Table $table"
+  echo '```'
   docker compose exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "\d $table"
+  echo '```'
 done

@@ -1,4 +1,5 @@
--- ==================================================
+# Table tbl_3_vehicle_limit
+```
                                        Table "public.tbl_3_vehicle_limit"
   Column   |         Type         | Collation | Nullable |                        Default                        
 -----------+----------------------+-----------+----------+-------------------------------------------------------
@@ -11,7 +12,9 @@
 Indexes:
     "idx_16387_primary" PRIMARY KEY, btree (limit_id)
 
--- ==================================================
+```
+# Table tbl_abandon_trips
+```
                                              Table "public.tbl_abandon_trips"
      Column     |           Type           | Collation | Nullable |                        Default                        
 ----------------+--------------------------+-----------+----------+-------------------------------------------------------
@@ -28,7 +31,9 @@ Indexes:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON tbl_abandon_trips FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_abandon_trips()
 
--- ==================================================
+```
+# Table tbl_comment_log
+```
                                             Table "public.tbl_comment_log"
     Column    |           Type           | Collation | Nullable |                       Default                       
 --------------+--------------------------+-----------+----------+-----------------------------------------------------
@@ -39,7 +44,9 @@ Triggers:
 Indexes:
     "idx_16404_primary" PRIMARY KEY, btree (comment_id)
 
--- ==================================================
+```
+# Table tbl_departments
+```
                            Table "public.tbl_departments"
     Column     |           Type           | Collation | Nullable |      Default      
 ---------------+--------------------------+-----------+----------+-------------------
@@ -56,7 +63,9 @@ Indexes:
 Indexes:
     "idx_16412_primary" PRIMARY KEY, btree (dept_id)
 
--- ==================================================
+```
+# Table tbl_driver_links_order
+```
           Table "public.tbl_driver_links_order"
     Column    |  Type   | Collation | Nullable | Default 
 --------------+---------+-----------+----------+---------
@@ -64,7 +73,9 @@ Indexes:
  link_order   | integer |           | not null | 
  driver_login | boolean |           | not null | 
 
--- ==================================================
+```
+# Table tbl_global_settings
+```
                   Table "public.tbl_global_settings"
    Column    |         Type          | Collation | Nullable | Default 
 -------------+-----------------------+-----------+----------+---------
@@ -73,7 +84,9 @@ Indexes:
 Indexes:
     "idx_16420_primary" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table tbl_info_links
+```
                                              Table "public.tbl_info_links"
       Column       |           Type           | Collation | Nullable |                     Default                     
 -------------------+--------------------------+-----------+----------+-------------------------------------------------
@@ -89,7 +102,9 @@ Indexes:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON tbl_info_links FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_info_links()
 
--- ==================================================
+```
+# Table tbl_log
+```
                                            Table "public.tbl_log"
      Column      |           Type           | Collation | Nullable |                 Default                 
 -----------------+--------------------------+-----------+----------+-----------------------------------------
@@ -101,7 +116,9 @@ Triggers:
 Indexes:
     "idx_16436_primary" PRIMARY KEY, btree (log_id)
 
--- ==================================================
+```
+# Table tbl_reservations
+```
                                                Table "public.tbl_reservations"
          Column          |           Type           | Collation | Nullable |                     Default                      
 -------------------------+--------------------------+-----------+----------+--------------------------------------------------
@@ -130,7 +147,9 @@ Indexes:
 Indexes:
     "idx_16442_primary" PRIMARY KEY, btree (res_id)
 
--- ==================================================
+```
+# Table tbl_restricted_charges
+```
                                             Table "public.tbl_restricted_charges"
     Column     |           Type           | Collation | Nullable |                          Default                          
 ---------------+--------------------------+-----------+----------+-----------------------------------------------------------
@@ -150,7 +169,9 @@ Indexes:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON tbl_restricted_charges FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_restricted_charges()
 
--- ==================================================
+```
+# Table tbl_shop_tasks
+```
                                              Table "public.tbl_shop_tasks"
        Column       |           Type           | Collation | Nullable |                     Default                     
 --------------------+--------------------------+-----------+----------+-------------------------------------------------
@@ -173,7 +194,9 @@ Triggers:
 Indexes:
     "idx_16464_primary" PRIMARY KEY, btree (task_id)
 
--- ==================================================
+```
+# Table tbl_special_notice
+```
                                            Table "public.tbl_special_notice"
     Column    |           Type           | Collation | Nullable |                        Default                        
 --------------+--------------------------+-----------+----------+-------------------------------------------------------
@@ -185,7 +208,9 @@ Indexes:
 Indexes:
     "idx_16474_primary" PRIMARY KEY, btree (notice_id)
 
--- ==================================================
+```
+# Table tbl_srvc_resvs
+```
                                           Table "public.tbl_srvc_resvs"
     Column    |           Type           | Collation | Nullable |                     Default                     
 --------------+--------------------------+-----------+----------+-------------------------------------------------
@@ -199,21 +224,27 @@ Indexes:
 Indexes:
     "idx_16483_primary" PRIMARY KEY, btree (srvc_id)
 
--- ==================================================
+```
+# Table tbl_srvc_resvs_details
+```
        Table "public.tbl_srvc_resvs_details"
  Column  |  Type  | Collation | Nullable | Default 
 ---------+--------+-----------+----------+---------
  srvc_id | bigint |           | not null | 
  res_id  | bigint |           | not null | 
 
--- ==================================================
+```
+# Table tbl_temp_mass_emails
+```
                   Table "public.tbl_temp_mass_emails"
    Column    |          Type          | Collation | Nullable | Default 
 -------------+------------------------+-----------+----------+---------
  email_id    | character varying(250) |           | not null | 
  driver_name | character varying(50)  |           | not null | 
 
--- ==================================================
+```
+# Table tbl_trip_details
+```
                                             Table "public.tbl_trip_details"
      Column      |           Type           | Collation | Nullable |                      Default                      
 -----------------+--------------------------+-----------+----------+---------------------------------------------------
@@ -230,7 +261,9 @@ Indexes:
 Indexes:
     "idx_16497_primary" PRIMARY KEY, btree (trip_id)
 
--- ==================================================
+```
+# Table tbl_user
+```
                                              Table "public.tbl_user"
       Column       |           Type           | Collation | Nullable |                  Default                  
 -------------------+--------------------------+-----------+----------+-------------------------------------------
@@ -267,7 +300,9 @@ Indexes:
 Indexes:
     "idx_16507_primary" PRIMARY KEY, btree (user_id)
 
--- ==================================================
+```
+# Table tbl_user_comments
+```
                                          Table "public.tbl_user_comments"
      Column      |           Type           | Collation | Nullable |                    Default                    
 -----------------+--------------------------+-----------+----------+-----------------------------------------------
@@ -280,7 +315,9 @@ Indexes:
 Indexes:
     "idx_16524_primary" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table tbl_user_group
+```
                                         Table "public.tbl_user_group"
    Column   |         Type          | Collation | Nullable |                     Default                      
 ------------+-----------------------+-----------+----------+--------------------------------------------------
@@ -289,7 +326,9 @@ Indexes:
 Indexes:
     "idx_16534_primary" PRIMARY KEY, btree (group_id)
 
--- ==================================================
+```
+# Table tbl_vehicle_brand
+```
                                          Table "public.tbl_vehicle_brand"
    Column   |          Type          | Collation | Nullable |                       Default                       
 ------------+------------------------+-----------+----------+-----------------------------------------------------
@@ -298,7 +337,9 @@ Indexes:
 Indexes:
     "idx_16550_primary" PRIMARY KEY, btree (brand_id)
 
--- ==================================================
+```
+# Table tbl_vehicle_comments
+```
                                         Table "public.tbl_vehicle_comments"
      Column      |          Type          | Collation | Nullable |                     Default                      
 -----------------+------------------------+-----------+----------+--------------------------------------------------
@@ -311,7 +352,9 @@ Indexes:
 Indexes:
     "idx_16556_primary" PRIMARY KEY, btree (id)
 
--- ==================================================
+```
+# Table tbl_vehicle_type
+```
                                          Table "public.tbl_vehicle_type"
   Column   |          Type          | Collation | Nullable |                       Default                       
 -----------+------------------------+-----------+----------+-----------------------------------------------------
@@ -321,7 +364,9 @@ Indexes:
 Indexes:
     "idx_16562_primary" PRIMARY KEY, btree (v_type_id)
 
--- ==================================================
+```
+# Table tbl_vehicles
+```
                                               Table "public.tbl_vehicles"
       Column       |           Type           | Collation | Nullable |                     Default                      
 -------------------+--------------------------+-----------+----------+--------------------------------------------------
@@ -355,7 +400,9 @@ Indexes:
 Triggers:
     on_update_current_timestamp BEFORE UPDATE ON tbl_vehicles FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_vehicles()
 
--- ==================================================
+```
+# Table tbl_work_type
+```
                                             Table "public.tbl_work_type"
     Column    |          Type          | Collation | Nullable |                       Default                       
 --------------+------------------------+-----------+----------+-----------------------------------------------------
@@ -364,3 +411,4 @@ Triggers:
 Indexes:
     "idx_16568_primary" PRIMARY KEY, btree (work_type_id)
 
+```
