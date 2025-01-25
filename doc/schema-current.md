@@ -413,7 +413,7 @@ Foreign-key constraints:
  id                         | bigint                   |           | not null | nextval('transport_reservations_id_seq'::regclass)
  vehicle_id                 | bigint                   |           | not null | 
  user_id                    | bigint                   |           | not null | 
- planned_passenger_no       | character varying(2)     |           | not null | 
+ planned_passenger_count    | character varying(2)     |           | not null | 
  coordinator_approval       | character varying(15)    |           | not null | 'Approved'::character varying
  planned_departure_datetime | timestamp with time zone |           |          | 
  planned_return_datetime    | timestamp with time zone |           |          | 
