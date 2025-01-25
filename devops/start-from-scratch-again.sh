@@ -60,7 +60,7 @@ echo "Migrate from MySQL to PostgreSQL"
 pgloader tmp/transport.load
 
 echo "Dump the structure as it was after the load into PostgreSQL, for later diffing of all the changes."
-./devops/view-schema.sh > tmp/schema-start.txt
+./devops/view-schema.sh > doc/schema-old.txt
 
 echo "Starting web container in the background."
 docker compose up -d web --build
@@ -72,7 +72,7 @@ echo "Running migrations"
 docker compose exec web python manage.py migrate --no-input
 
 echo "Repeat the dump after the migrations for diffing."
-./devops/view-schema.sh > tmp/schema-stop.txt
+./devops/view-schema.sh > doc/schema-current.txt
 
 echo "Creates the superuser with the variables from the .env file previously loaded."
 docker compose run -e DJANGO_SUPERUSER_USERNAME -e DJANGO_SUPERUSER_EMAIL -e DJANGO_SUPERUSER_PASSWORD web python manage.py createsuperuser --noinput
