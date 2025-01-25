@@ -1,0 +1,82 @@
+<div class="p-3">
+    <h4>Trip Details</h4>
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        {% if service_type %}
+            <!-- Service Reservation -->
+            <table class="table">
+                <tr>
+                    <th>Service ID:</th>
+                    <td>{{ res_id }}</td>
+                </tr>
+                <tr>
+                    <th>Vehicle:</th>
+                    <td>{{ vehicle_no }}</td>
+                </tr>
+                <tr>
+                    <th>Service Type:</th>
+                    <td>{{ service_type|title }}</td>
+                </tr>
+                <tr>
+                    <th>From:</th>
+                    <td>{{ from_date }}</td>
+                </tr>
+                <tr>
+                    <th>To:</th>
+                    <td>{{ to_date }}</td>
+                </tr>
+            </table>
+        {% else %}
+            <!-- Normal Reservation -->
+            <table class="table">
+                <tr>
+                    <th>Reservation ID:</th>
+                    <td>{{ res_id }}</td>
+                </tr>
+                <tr>
+                    <th>Vehicle:</th>
+                    <td>{{ vehicle_no }}</td>
+                </tr>
+                <tr>
+                    <th>Driver:</th>
+                    <td>{{ driver_name }}</td>
+                </tr>
+                <tr>
+                    <th>Passengers:</th>
+                    <td>{{ passenger_count }}</td>
+                </tr>
+                <tr>
+                    <th>Departure:</th>
+                    <td>{{ departure }}</td>
+                </tr>
+                <tr>
+                    <th>Return:</th>
+                    <td>{{ return }}</td>
+                </tr>
+                <tr>
+                    <th>Destination:</th>
+                    <td>{{ destination }}</td>
+                </tr>
+                <tr>
+                    <th>Department:</th>
+                    <td>{{ department }}</td>
+                </tr>
+                <tr>
+                    <th>Key #:</th>
+                    <td>{{ key_no }}</td>
+                </tr>
+                <tr>
+                    <th>Card #:</th>
+                    <td>{{ card_no }}</td>
+                </tr>
+            </table>
+            {% if user.is_staff %}
+            <div class="mt-3">
+                <a href="{% url 'edit_reservation' res_id %}" class="btn btn-primary">Edit Reservation</a>
+                <button class="btn btn-danger" onclick="deleteReservation({{ res_id }})">Delete Reservation</button>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>

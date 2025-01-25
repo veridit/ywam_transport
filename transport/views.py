@@ -6,30 +6,41 @@ from django.utils import timezone
 import datetime
 
 def pending_trips_chart(request):
-    # Handling form data (Only for authenticated users)
+    """Display chart of pending trips"""
+    # Get the current view date from session or POST
+    current_date = None
     if request.method == "POST" and request.user.is_authenticated:
-        action = request.POST.get('action', '')
-        txtdeptdatetime = request.POST.get('txtdeptdatetime', '')
+        posted_date = request.POST.get('txtdeptdatetime')
+        if posted_date:
+            current_date = datetime.datetime.strptime(posted_date, '%Y-%m-%d').date()
 
-        if action == 'viewreservations':
-            # Handle viewing reservations or other actions that require authentication
-            pass
+    if not current_date:
+        current_date = request.session.get('current_date')
+        if current_date:
+            current_date = datetime.datetime.fromisoformat(current_date).date()
+        else:
+            current_date = timezone.now().date()
 
-    # Set default date
-    today_date = timezone.now().date()
-    sTimePickerDate1 = (today_date + datetime.timedelta(days=1)).strftime('%m/%d/%Y')
+    # Store current date in session
+    request.session['current_date'] = current_date.isoformat()
 
-    # Calculate the next three days
-    days = [today_date + datetime.timedelta(days=i) for i in range(3)]
-    hours = list(range(4, 23))
+    # Calculate the date range to show (3 days)
+    days = [current_date + datetime.timedelta(days=i) for i in range(3)]
+    hours = list(range(4, 23))  # 4 AM to 11 PM
 
-    # Fetch vehicles and their pending trips
-    vehicles = Vehicles.objects.filter(sold=False)
+    # Fetch active vehicles
+    vehicles = Vehicles.objects.filter(
+        sold=False,
+        active=False
+    ).order_by('vehicle_no')
+
     vehicle_data = []
-
     for vehicle in vehicles:
-        # TODO: Shouldn't there be a consistent `days=days.length`?
-        trips = check_pending_trips(vehicle.id, today_date, today_date + datetime.timedelta(days=2))
+        trips = check_pending_trips(
+            vehicle.id,
+            days[0],  # Start of range
+            days[-1] + datetime.timedelta(days=1)  # End of range
+        )
         vehicle_data.append({
             'vehicle_no': vehicle.vehicle_no,
             'trips': trips
@@ -37,22 +48,28 @@ def pending_trips_chart(request):
 
     context = {
         'vehicles': vehicle_data,
-        'today_date': today_date,
-        'sTimePickerDate1': sTimePickerDate1,
+        'current_date': current_date,
         'days': days,
-        'hours': hours
+        'hours': hours,
+        'message': request.session.pop('message', None)
     }
     return render(request, 'transport/pending_trips_chart.html', context)
 
 def check_pending_trips(vehicle_id, start_date, end_date):
+    """Check for pending trips in the given date range"""
     pending_trips = []
+
+    # Get normal reservations
     reservations = Reservations.objects.filter(
         vehicle_id=vehicle_id,
         planned_departure_datetime__range=(start_date, end_date),
+        planned_return_datetime__range=(start_date, end_date),
         reservation_cancelled=False,
         cancelled_by_driver=False,
         coordinator_approval='Approved'
-    )
+    ).select_related('vehicle', 'assigned_driver', 'billing_department')
+
+    # Get service reservations
     service_reservations = ServiceReservations.objects.filter(
         vehicle_id=vehicle_id,
         from_datetime__lte=end_date,
@@ -64,14 +81,97 @@ def check_pending_trips(vehicle_id, start_date, end_date):
     for res in reservations:
         pending_trips.append({
             'res_id': res.id,
-            'pending_trips': res.planned_departure_datetime,
+            'vehicle_no': res.vehicle.vehicle_no,
+            'driver_name': f"{res.assigned_driver.first_name} {res.assigned_driver.last_name}",
+            'passenger_count': res.planned_passenger_count,
+            'departure': res.planned_departure_datetime,
+            'return': res.planned_return_datetime,
+            'destination': res.destination,
+            'department': res.billing_department.name,
+            'key_no': res.key_no,
+            'card_no': res.card_no,
             'res_type': 'normal'
         })
+
     for sr in service_reservations:
         pending_trips.append({
             'res_id': sr.id,
-            'pending_trips': sr.from_datetime,
+            'vehicle_no': sr.vehicle.vehicle_no,
+            'departure': sr.from_datetime,
+            'return': sr.to_datetime,
             'res_type': 'pulled'
         })
 
-    return pending_trips
+    # Sort trips by datetime
+    return sorted(pending_trips, key=lambda x: x['departure'])
+
+def load_pending_trips(request, res_id):
+    """Load details for a specific pending trip"""
+    try:
+        # Try to get reservation details
+        reservation = Reservations.objects.select_related(
+            'vehicle',
+            'assigned_driver',
+            'billing_department'
+        ).get(
+            id=res_id,
+            reservation_cancelled=False,
+            cancelled_by_driver=False,
+            coordinator_approval='Approved'
+        )
+
+        context = {
+            'res_id': res_id,
+            'vehicle_no': reservation.vehicle.vehicle_no,
+            'driver_name': f"{reservation.assigned_driver.first_name} {reservation.assigned_driver.last_name}",
+            'passenger_count': reservation.planned_passenger_count,
+            'departure': reservation.planned_departure_datetime,
+            'return': reservation.planned_return_datetime,
+            'destination': reservation.destination,
+            'department': reservation.billing_department.name,
+            'key_no': reservation.key_no,
+            'card_no': reservation.card_no
+        }
+    except Reservations.DoesNotExist:
+        # Check if it's a service reservation
+        try:
+            service = ServiceReservations.objects.select_related('vehicle').get(
+                id=res_id,
+                is_cancelled=False,
+                service_type='temporary'
+            )
+            context = {
+                'res_id': res_id,
+                'vehicle_no': service.vehicle.vehicle_no,
+                'service_type': service.service_type,
+                'from_date': service.from_datetime,
+                'to_date': service.to_datetime
+            }
+        except ServiceReservations.DoesNotExist:
+            context = {'error': 'Reservation not found'}
+
+    return render(request, 'transport/trip_details.html', context)
+
+def previous_day(request):
+    # Get current date from session or use today
+    current_date = request.session.get('current_date', timezone.now().date().isoformat())
+    current_date = datetime.datetime.fromisoformat(current_date).date()
+
+    # Move one day back
+    new_date = current_date - datetime.timedelta(days=1)
+    request.session['current_date'] = new_date.isoformat()
+
+    # Recalculate the view with new date
+    return pending_trips_chart(request)
+
+def next_day(request):
+    # Get current date from session or use today
+    current_date = request.session.get('current_date', timezone.now().date().isoformat())
+    current_date = datetime.datetime.fromisoformat(current_date).date()
+
+    # Move one day forward
+    new_date = current_date + datetime.timedelta(days=1)
+    request.session['current_date'] = new_date.isoformat()
+
+    # Recalculate the view with new date
+    return pending_trips_chart(request)
