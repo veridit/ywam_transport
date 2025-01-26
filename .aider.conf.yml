@@ -1,0 +1,8 @@
+## Instruct the AI about this project
+read: CONVENTIONS.md
+
+## Enable/disable watching files for ai coding comments (default: False)
+watch-files: true
+
+## Avoid surprise edits.
+auto-commits: false
