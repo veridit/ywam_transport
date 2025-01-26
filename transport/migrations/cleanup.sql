@@ -587,4 +587,24 @@ CREATE INDEX "transport_comment_log_user_id_7449557a" ON "transport_comment_log"
 CREATE INDEX "transport_abandon_trips_reservation_id_1cf30d87" ON "transport_abandon_trips" ("reservation_id");
 CREATE INDEX "transport_abandon_trips_user_id_88d1e9ec" ON "transport_abandon_trips" ("user_id");
 
+
+-- Drop old trigger and function
+DROP TRIGGER IF EXISTS on_update_current_timestamp ON transport_vehicles;
+DROP FUNCTION IF EXISTS public.on_update_current_timestamp_tbl_vehicles();
+
+-- Create new function with updated column name
+CREATE OR REPLACE FUNCTION public.on_update_timestamp_vehicles()
+RETURNS trigger AS $$
+BEGIN
+    NEW.revised_date = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create new trigger with updated names
+CREATE TRIGGER on_update_timestamp
+    BEFORE UPDATE ON transport_vehicles
+    FOR EACH ROW
+    EXECUTE FUNCTION public.on_update_timestamp_vehicles();
+
 END;
