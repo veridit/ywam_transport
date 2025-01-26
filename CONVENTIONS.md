@@ -7,3 +7,7 @@ HTMX for minimal JS coding and easy interaction from generated html.
 Bootstrap for a straightforward UI.
 
 The development setup is with docker compose.
+
+Use `docker compose web python manage.py ...' to run Django commands.
+
+Secrets are stored in '.env'.
