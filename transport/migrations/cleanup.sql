@@ -607,4 +607,15 @@ CREATE TRIGGER on_update_timestamp
     FOR EACH ROW
     EXECUTE FUNCTION public.on_update_timestamp_vehicles();
 
+
+-- Set recently used vehicles as active
+UPDATE transport_vehicles v
+SET active = TRUE
+WHERE EXISTS (
+    SELECT 1
+    FROM transport_reservations r
+    WHERE r.vehicle_id = v.id
+    AND r.planned_departure_datetime >= NOW() - INTERVAL '1 year'
+);
+
 END;
