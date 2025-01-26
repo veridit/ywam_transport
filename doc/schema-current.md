@@ -709,6 +709,8 @@ Indexes:
     "transport_vehicles_make_id_e017fa97" btree (make_id)
     "transport_vehicles_model_id_4952d844" btree (model_id)
     "transport_vehicles_user_id_084f10a6" btree (user_id)
+Check constraints:
+    "transport_vehicles_check_sold_inactive" CHECK (NOT (active AND sold))
 Foreign-key constraints:
     "transport_vehicles_make_id_e017fa97_fk_transport" FOREIGN KEY (make_id) REFERENCES transport_vehicle_brand(id) ON DELETE RESTRICT DEFERRABLE
     "transport_vehicles_model_id_4952d844_fk_transport" FOREIGN KEY (model_id) REFERENCES transport_vehicle_type(id) ON DELETE RESTRICT DEFERRABLE
@@ -720,7 +722,7 @@ Referenced by:
     TABLE "transport_shop_tasks" CONSTRAINT "transport_shop_tasks_vehicle_id_a0e004fa_fk_transport" FOREIGN KEY (vehicle_id) REFERENCES transport_vehicles(id) ON DELETE RESTRICT DEFERRABLE
     TABLE "transport_vehicle_comments" CONSTRAINT "transport_vehicle_co_vehicle_id_a7fe8bd9_fk_transport" FOREIGN KEY (vehicle_id) REFERENCES transport_vehicles(id) ON DELETE CASCADE DEFERRABLE
 Triggers:
-    on_update_current_timestamp BEFORE UPDATE ON transport_vehicles FOR EACH ROW EXECUTE FUNCTION on_update_current_timestamp_tbl_vehicles()
+    on_update_timestamp BEFORE UPDATE ON transport_vehicles FOR EACH ROW EXECUTE FUNCTION on_update_timestamp_vehicles()
 
 ```
 # Table transport_work_type
