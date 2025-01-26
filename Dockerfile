@@ -17,7 +17,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
-    curl \
+    tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only the requirements file to leverage Docker cache for dependencies

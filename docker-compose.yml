@@ -34,15 +34,14 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
     tty: true
     stdin_open: true
+    command: /code/docker/entrypoint.sh
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+      test: ["CMD-SHELL", "tmux has-session webapp"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     volumes:
       - .:/code
     ports:
