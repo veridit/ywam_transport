@@ -5,7 +5,7 @@ from .models import Vehicles, Reservations, ServiceReservations
 from django.utils import timezone
 import datetime
 
-def pending_trips_chart(request):
+def pending_trips_chart(request, partial=False):
     """Display chart of pending trips"""
     # Get the current view date from session or POST
     current_date = None
@@ -31,7 +31,7 @@ def pending_trips_chart(request):
     # Fetch active vehicles
     vehicles = Vehicles.objects.filter(
         sold=False,
-        active=False
+        active=True
     ).order_by('vehicle_no')
 
     vehicle_data = []
@@ -152,26 +152,28 @@ def load_pending_trips(request, res_id):
 
     return render(request, 'transport/trip_details.html', context)
 
-def previous_day(request):
-    # Get current date from session or use today
+def _handle_day_change(request, delta):
+    """Helper function to handle day navigation with proper HTMX support"""
     current_date = request.session.get('current_date', timezone.now().date().isoformat())
     current_date = datetime.datetime.fromisoformat(current_date).date()
 
-    # Move one day back
-    new_date = current_date - datetime.timedelta(days=1)
+    new_date = current_date + datetime.timedelta(days=delta)
     request.session['current_date'] = new_date.isoformat()
 
-    # Recalculate the view with new date
-    return pending_trips_chart(request)
+    # Get context from pending_trips_chart
+    response = pending_trips_chart(request)
+    context = getattr(response, 'context', {})
+
+    # Return partial template for HTMX requests
+    if request.headers.get('HX-Request'):
+        return render(request, 'transport/partials/trips_table.html', context)
+
+    return response
+
+def previous_day(request):
+    """Navigate to previous day with HTMX support"""
+    return _handle_day_change(request, -1)
 
 def next_day(request):
-    # Get current date from session or use today
-    current_date = request.session.get('current_date', timezone.now().date().isoformat())
-    current_date = datetime.datetime.fromisoformat(current_date).date()
-
-    # Move one day forward
-    new_date = current_date + datetime.timedelta(days=1)
-    request.session['current_date'] = new_date.isoformat()
-
-    # Recalculate the view with new date
-    return pending_trips_chart(request)
+    """Navigate to next day with HTMX support"""
+    return _handle_day_change(request, 1)

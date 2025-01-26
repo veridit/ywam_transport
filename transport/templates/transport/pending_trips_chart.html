@@ -28,46 +28,7 @@
                 </div>
                 {% endif %}
                 <div id="result">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">V.NO</th>
-                                {% for day in days %}
-                                    <th scope="col" class="text-center">{{ day|date:"m/d/Y" }}</th>
-                                {% endfor %}
-                            </tr>
-                            <tr>
-                                <th></th>
-                                {% for day in days %}
-                                    <td>
-                                        <div class="d-flex">
-                                            {% for hour in hours %}
-                                                <div class="flex-fill text-center small" style="width: 20px;">{{ hour }}</div>
-                                            {% endfor %}
-                                        </div>
-                                    </td>
-                                {% endfor %}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for vehicle in vehicles %}
-                                <tr>
-                                    <th scope="row" class="text-center">{{ vehicle.vehicle_no }}</th>
-                                    {% for day in days %}
-                                        <td>
-                                            <div class="d-flex">
-                                                {% for hour in hours %}
-                                                    {% with trip=vehicle.trips|default_if_none:"" %}
-                                                        <div class="flex-fill text-center" style="width: 20px; height: 20px; background-color: {% if trip %}#FF6633{% else %}#FFF{% endif %}; border: 1px solid #000;" {% if user.is_authenticated and trip %}hx-trigger="click" hx-get="{% url 'load_pending_trips' trip.res_id %}" hx-target="#contactArea" hx-swap="innerHTML"{% endif %}></div>
-                                                    {% endwith %}
-                                                {% endfor %}
-                                            </div>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    {% include 'transport/partials/trips_table.html' %}
                 </div>
                 {% if user.is_authenticated %}
                 <div class="d-flex justify-content-between">
