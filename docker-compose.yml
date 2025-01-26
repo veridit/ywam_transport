@@ -34,13 +34,15 @@ services:
 
   web:
     build: .
+    command: python manage.py runserver 0.0.0.0:8000
     tty: true
-    command: screen -S django bash
+    stdin_open: true
     healthcheck:
-      test: ["CMD", "screen", "-ls"]
-      interval: 1s
-      timeout: 1s
-      retries: 10
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     volumes:
       - .:/code
     ports:

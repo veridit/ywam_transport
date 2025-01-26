@@ -68,16 +68,13 @@ docker compose up -d web --build
 echo "Running Django system check"
 time docker compose exec web python manage.py check
 
-echo "Running migrations"
-docker compose exec web python manage.py migrate --no-input
+echo "Running migrations and starting web service"
+docker compose up -d web
 
 echo "Repeat the dump after the migrations for diffing."
 ./devops/view-schema.sh > doc/schema-current.md
 
 echo "Creates the superuser with the variables from the .env file previously loaded."
-docker compose run -e DJANGO_SUPERUSER_USERNAME -e DJANGO_SUPERUSER_EMAIL -e DJANGO_SUPERUSER_PASSWORD web python manage.py createsuperuser --noinput
-
-echo "Run the server in the background and take over as the dominant process"
-docker compose exec web screen -S django -X stuff 'python manage.py runserver 0.0.0.0:8000\n'
+docker compose exec web python manage.py createsuperuser --noinput
 
 popd

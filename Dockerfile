@@ -17,7 +17,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
-    screen \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy only the requirements file to leverage Docker cache for dependencies
@@ -26,8 +26,15 @@ COPY requirements.txt /code/
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Copy the rest of the application code
 COPY . /code/
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
+
+# Set entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
