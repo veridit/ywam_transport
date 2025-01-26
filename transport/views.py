@@ -160,15 +160,38 @@ def _handle_day_change(request, delta):
     new_date = current_date + datetime.timedelta(days=delta)
     request.session['current_date'] = new_date.isoformat()
 
-    # Get context from pending_trips_chart
-    response = pending_trips_chart(request)
-    context = getattr(response, 'context', {})
+    # Calculate the date range to show (3 days)
+    days = [new_date + datetime.timedelta(days=i) for i in range(3)]
+    hours = list(range(4, 23))
+
+    # Fetch active vehicles
+    vehicles = Vehicles.objects.filter(
+        sold=False,
+        active=True
+    ).order_by('vehicle_no')
+
+    vehicle_data = []
+    for vehicle in vehicles:
+        trips = check_pending_trips(
+            vehicle.id,
+            days[0],
+            days[-1] + datetime.timedelta(days=1)
+        )
+        vehicle_data.append({
+            'vehicle_no': vehicle.vehicle_no,
+            'trips': trips
+        })
+
+    context = {
+        'vehicles': vehicle_data,
+        'current_date': new_date,
+        'days': days,
+        'hours': hours,
+        'message': request.session.pop('message', None)
+    }
 
     # Return partial template for HTMX requests
-    if request.headers.get('HX-Request'):
-        return render(request, 'transport/partials/trips_table.html', context)
-
-    return response
+    return render(request, 'transport/partials/trips_table.html', context)
 
 def previous_day(request):
     """Navigate to previous day with HTMX support"""
