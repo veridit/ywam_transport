@@ -114,6 +114,12 @@ class Vehicles(models.Model):
         db_table = 'transport_vehicles'
         verbose_name = "Vehicle"
         verbose_name_plural = "Vehicles"
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(active=True, sold=True),
+                name='transport_vehicles_check_sold_inactive'
+            )
+        ]
 
 
 class InfoLinksPosition(models.Model):
