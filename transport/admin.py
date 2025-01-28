@@ -91,6 +91,7 @@ class VehiclesAdmin(ModelAdmin):
     list_filter = ('make', 'model', DefaultTrueBooleanSimpleListFilter, 'restricted', 'sold')
     autocomplete_fields = ['user', 'make', 'model']
 
+    # Initially show only Active vehicles in /admin, unless other filtering is enabled.
     def changelist_view(self, request, extra_context=None):
         if 'active' not in request.GET and 'q' not in request.GET:
             q = request.GET.copy()
@@ -98,6 +99,7 @@ class VehiclesAdmin(ModelAdmin):
             return HttpResponseRedirect(f"{request.path}?{urlencode(q)}")
         return super().changelist_view(request, extra_context=extra_context)
 
+    # Only show autocomplete of active Vehicles when linking, say Reservation to a Vehicle.
     def get_search_results(self, request, queryset, search_term):
         if (request.path == '/admin/autocomplete/'):
             queryset = queryset.filter(active=True)
