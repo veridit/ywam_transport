@@ -3,9 +3,10 @@
 When comparing functionality from `old/www/html/pending_trips_chart.php` to
 `transport/templates/transport/pending_trips_chart.html` and `transport/views.py`.
 
+# AI! Solve the Time Display items.
 ## Time Display
-- [ ] Implement AM/PM time format display (4AM-10PM) instead of 24h
-- [ ] Add time slot column headers with AM/PM format
+- [x] Implement AM/PM time format display (4AM-10PM) instead of 24h
+- [x] Add time slot column headers with AM/PM format
 
 ## Vehicle Filtering
 - [ ] Add exclusion of vehicles with permanent service reservations

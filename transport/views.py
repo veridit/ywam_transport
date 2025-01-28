@@ -24,35 +24,8 @@ def pending_trips_chart(request, partial=False):
     # Store current date in session
     request.session['current_date'] = current_date.isoformat()
 
-    # Calculate the date range to show (3 days)
-    days = [current_date + datetime.timedelta(days=i) for i in range(3)]
-    hours = list(range(4, 23))  # 4 AM to 11 PM
-
-    # Fetch active vehicles
-    vehicles = Vehicles.objects.filter(
-        sold=False,
-        active=True
-    ).order_by('vehicle_no')
-
-    vehicle_data = []
-    for vehicle in vehicles:
-        trips = check_pending_trips(
-            vehicle.id,
-            days[0],  # Start of range
-            days[-1] + datetime.timedelta(days=1)  # End of range
-        )
-        vehicle_data.append({
-            'vehicle_no': vehicle.vehicle_no,
-            'trips': trips
-        })
-
-    context = {
-        'vehicles': vehicle_data,
-        'current_date': current_date,
-        'days': days,
-        'hours': hours,
-        'message': request.session.pop('message', None)
-    }
+    context = _get_chart_data(current_date)
+    context['message'] = request.session.pop('message', None)
     return render(request, 'transport/pending_trips_chart.html', context)
 
 def check_pending_trips(vehicle_id, start_date, end_date):
@@ -152,17 +125,22 @@ def load_pending_trips(request, res_id):
 
     return render(request, 'transport/trip_details.html', context)
 
-def _handle_day_change(request, delta):
-    """Helper function to handle day navigation with proper HTMX support"""
-    current_date = request.session.get('current_date', timezone.now().date().isoformat())
-    current_date = datetime.datetime.fromisoformat(current_date).date()
+def _format_hours():
+    """Helper function to format hours with AM/PM"""
+    hours = []
+    for hour in range(4, 23):  # 4 AM to 10 PM
+        ampm = 'AM' if hour < 12 else 'PM'
+        display_hour = hour if hour <= 12 else hour - 12
+        hours.append({
+            'hour': hour,
+            'display': f"{display_hour}{ampm}"
+        })
+    return hours
 
-    new_date = current_date + datetime.timedelta(days=delta)
-    request.session['current_date'] = new_date.isoformat()
-
-    # Calculate the date range to show (3 days)
-    days = [new_date + datetime.timedelta(days=i) for i in range(3)]
-    hours = list(range(4, 23))
+def _get_chart_data(current_date):
+    """Helper function to get all data needed for the chart"""
+    days = [current_date + datetime.timedelta(days=i) for i in range(3)]
+    hours = _format_hours()
 
     # Fetch active vehicles
     vehicles = Vehicles.objects.filter(
@@ -182,13 +160,23 @@ def _handle_day_change(request, delta):
             'trips': trips
         })
 
-    context = {
+    return {
         'vehicles': vehicle_data,
-        'current_date': new_date,
+        'current_date': current_date,
         'days': days,
-        'hours': hours,
-        'message': request.session.pop('message', None)
+        'hours': hours
     }
+
+def _handle_day_change(request, delta):
+    """Helper function to handle day navigation with proper HTMX support"""
+    current_date = request.session.get('current_date', timezone.now().date().isoformat())
+    current_date = datetime.datetime.fromisoformat(current_date).date()
+
+    new_date = current_date + datetime.timedelta(days=delta)
+    request.session['current_date'] = new_date.isoformat()
+
+    context = _get_chart_data(new_date)
+    context['message'] = request.session.pop('message', None)
 
     # Return partial template for HTMX requests
     return render(request, 'transport/partials/trips_table.html', context)

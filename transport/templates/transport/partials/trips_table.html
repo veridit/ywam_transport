@@ -1,40 +1,96 @@
-<table class="table table-bordered">
+{% load tz %}
+
+<table class="table table-bordered table-sm">
     <thead>
         <tr>
-            <th scope="col">V.NO</th>
+            <th class="text-center" style="width: 45px;">V.NO</th>
             {% for day in days %}
-                <th scope="col" class="text-center">{{ day|date:"m/d/Y" }}</th>
+            <th class="text-center" colspan="{{ hours|length }}">
+                {{ day|date:"D j M Y" }}
+            </th>
             {% endfor %}
         </tr>
         <tr>
             <th></th>
             {% for day in days %}
-                <td>
-                    <div class="d-flex">
-                        {% for hour in hours %}
-                            <div class="flex-fill text-center small" style="width: 20px;">{{ hour }}</div>
-                        {% endfor %}
-                    </div>
-                </td>
+                {% for hour in hours %}
+                <th class="text-center" style="width: 20px; font-size: 8pt;">
+                    {{ hour.display }}
+                </th>
+                {% endfor %}
             {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for vehicle in vehicles %}
-            <tr>
-                <th scope="row" class="text-center">{{ vehicle.vehicle_no }}</th>
-                {% for day in days %}
-                    <td>
-                        <div class="d-flex">
-                            {% for hour in hours %}
-                                {% with trip=vehicle.trips|default_if_none:"" %}
-                                    <div class="flex-fill text-center" style="width: 20px; height: 20px; background-color: {% if trip %}#FF6633{% else %}#FFF{% endif %}; border: 1px solid #000;" {% if user.is_authenticated and trip %}hx-trigger="click" hx-get="{% url 'load_pending_trips' trip.res_id %}" hx-target="#contactArea" hx-swap="innerHTML"{% endif %}></div>
-                                {% endwith %}
-                            {% endfor %}
-                        </div>
-                    </td>
+        <tr>
+            <td class="text-end fw-bold">{{ vehicle.vehicle_no }}</td>
+            {% for day in days %}
+                {% for hour in hours %}
+                    {% with current_hour=hour.hour|stringformat:"02d" %}
+                        {% with current_datetime=day|date:"Y-m-d"|add:" "|add:current_hour|add:":00:00" %}
+                            {% with reservation=vehicle.trips|dictsortreversed:"departure"|first %}
+                                {% if reservation and reservation.departure|date:"Y-m-d H:00:00" == current_datetime %}
+                                    {% if reservation.res_type == 'normal' %}
+                                    <td class="text-center" style="background-color: #FF6633; height: 10px;"
+                                        data-bs-toggle="tooltip" 
+                                        title="Resv No: {{ reservation.res_id }}"
+                                        onclick="loadPendingTrip({{ reservation.res_id }})">
+                                    </td>
+                                    {% else %}
+                                    <td class="text-center" style="background-color: #000000; height: 10px;"
+                                        data-bs-toggle="tooltip"
+                                        title="Vehicle being Repaired until {{ reservation.return|date:'d M Y H:i' }}">
+                                    </td>
+                                    {% endif %}
+                                {% else %}
+                                    <td class="text-center" style="background-color: #FFF; height: 10px;"></td>
+                                {% endif %}
+                            {% endwith %}
+                        {% endwith %}
+                    {% endwith %}
                 {% endfor %}
-            </tr>
+            {% endfor %}
+        </tr>
         {% endfor %}
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="{{ hours|length|add:1 }}" class="text-center">
+                <div class="d-flex justify-content-center gap-3 align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width: 20px; height: 20px; background-color: #FF6633; border: 1px solid #000;"></div>
+                        <span>Reserved</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width: 20px; height: 20px; background-color: #FFF; border: 1px solid #000;"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width: 20px; height: 20px; background-color: #000000; border: 1px solid #000;"></div>
+                        <span>Service</span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
 </table>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+});
+
+function loadPendingTrip(resId) {
+    var modal = new bootstrap.Modal(document.getElementById('popupContact'));
+    fetch(`/transport/load_pending_trip/${resId}/`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('contactArea').innerHTML = html;
+            modal.show();
+        });
+}
+</script>
