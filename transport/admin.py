@@ -86,8 +86,8 @@ class RestrictedChargesAdmin(ModelAdmin):
 
 @admin.register(Vehicles)
 class VehiclesAdmin(ModelAdmin):
-    list_display = ('id', 'user', 'vehicle_no', 'vin_no', 'make', 'model', 'manufacture_year', 'active', 'restricted', 'sold')
-    search_fields = ('vehicle_no', 'vin_no', 'license_plate_no', 'make__name', 'model__type')
+    list_display = ('id', 'vin_no', 'vehicle_no', 'make', 'model', 'manufacture_year', 'active', 'user', 'restricted', 'sold')
+    search_fields = ('vehicle_no', 'vin_no', 'license_plate_no', 'make__name', 'model__type','user__email')
     list_filter = ('make', 'model', DefaultTrueBooleanSimpleListFilter, 'restricted', 'sold')
     autocomplete_fields = ['user', 'make', 'model']
 
